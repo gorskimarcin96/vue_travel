@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  frontend:
+    image: vue_travel
+    build:
+      context: ./..
+      dockerfile: ./docker/frontend/Dockerfile
+    ports:
+      - ${FRONTEND_PORT}:80

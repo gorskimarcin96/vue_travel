@@ -8,7 +8,7 @@ import {Money} from "@/models/Money";
 class travel {
     static async search(nation: string, place: string, force: boolean = false): Promise<Search> {
         return axios
-            .post('http://localhost/search', {
+            .post(`${import.meta.env.VITE_API_URL}/search`, {
                 "nation": nation,
                 "place": place,
                 "force": force
@@ -27,7 +27,7 @@ class travel {
 
     static async getOptionalTrips(searchId: number, source: string): Promise<OptionalTrip[]> {
         return axios
-            .get('http://localhost/optional_trips', {
+                .get(`${import.meta.env.VITE_API_URL}/optional_trips`, {
                 params: {search: searchId, source: source},
                 headers: {Accept: 'application/json'}
             })
@@ -46,7 +46,7 @@ class travel {
 
     static async getPageTrips(searchId: number, source: string): Promise<PageTrip[]> {
         return axios
-            .get('http://localhost/trip_pages', {
+            .get(`${import.meta.env.VITE_API_URL}/trip_pages`, {
                 params: {search: searchId, source: source},
                 headers: {Accept: 'application/json'}
             })

@@ -9,7 +9,7 @@ const router = createRouter({
             return {path: '/searcher'}
         }
     }, {
-        path: '/searcher',
+        path: '/searcher/',
         name: 'Searcher',
         component: SearcherView
     }]

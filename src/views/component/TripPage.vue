@@ -1,8 +1,18 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
-import {PageTrip} from "@/models/PageTrip";
+import type {PropType} from 'vue';
+import {PageTrip as ModelPageTrip } from "@/models/PageTrip";
+import {OptionalTrip as ModelOptionalTrip} from "@/models/OptionalTrip";
 
-export default defineComponent({props: {pageTrip: PageTrip}});
+export default defineComponent({
+  props: {
+    pageTrip: {
+
+      type: Object as PropType<ModelPageTrip>,
+      required: true
+    }
+  }
+});
 </script>
 
 <template>
@@ -42,9 +52,9 @@ export default defineComponent({props: {pageTrip: PageTrip}});
       </div>
     </div>
     <div class="card-body" v-if="pageTrip.map">
-      <iframe v-bind:src="pageTrip.map" allowfullscreen="" loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade" class="w-100" height="500"/>
-      <a v-bind:href="pageTrip.map">map</a>
+      <iframe v-bind:src="pageTrip.map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-100"
+              height="500"/>
+      <a v-bind:href="pageTrip.map">Link to map.</a>
     </div>
   </div>
 </template>

@@ -1,10 +1,18 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
-import {OptionalTrip} from "@/models/OptionalTrip";
-import TripPage from "@/views/component/TripPage.vue";
+import type {PropType} from 'vue';
+import {OptionalTrip as ModelOptionalTrip} from "@/models/OptionalTrip";
 import Money from "@/views/component/Money.vue";
 
-export default defineComponent({components: {Money}, props: {optionalTrip: OptionalTrip}});
+export default defineComponent({
+  components: {Money},
+  props: {
+    optionalTrip: {
+      type: Object as PropType<ModelOptionalTrip>,
+      required: true
+    }
+  }
+});
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 export class Money {
-    constructor(private readonly _price: number, private readonly _currency: string) {
+    constructor(public readonly _price: number, public readonly _currency: string) {
     }
 
     get price(): number {

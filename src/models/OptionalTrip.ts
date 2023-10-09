@@ -1,14 +1,15 @@
 import {Money} from "@/models/Money";
+import type {SourceInterface} from "@/models/SourceInterface";
 
-export class OptionalTrip {
+export class OptionalTrip implements SourceInterface {
     constructor(
-        private readonly _id: number,
-        private readonly _title: string,
-        private readonly _description: string[],
-        private readonly _url: string,
-        private readonly _img: string,
-        private readonly _source: string,
-        private readonly _money: Money | null
+        public readonly _id: number,
+        public readonly _title: string,
+        public readonly _description: string[],
+        public readonly _url: string,
+        public readonly _img: string,
+        public readonly _source: string,
+        public readonly _money: Money | null
     ) {
     }
 

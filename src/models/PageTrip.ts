@@ -1,12 +1,13 @@
 import {TripArticle} from "@/models/PageArticle";
+import type {SourceInterface} from "@/models/SourceInterface";
 
-export class PageTrip {
+export class PageTrip implements SourceInterface {
     constructor(
-        private readonly _id: number,
-        private readonly _url: string,
-        private readonly _map: string | null,
-        private readonly _tripArticles: TripArticle[],
-        private readonly _source: string
+        public readonly _id: number,
+        public readonly _url: string,
+        public readonly _map: string | null,
+        public readonly _tripArticles: TripArticle[],
+        public readonly _source: string
     ) {
     }
 

@@ -1,9 +1,9 @@
 export class TripArticle {
     constructor(
-        private readonly _id: number,
-        private readonly _title: string,
-        private readonly _descriptions: string[],
-        private readonly _images: string[]
+        public readonly _id: number,
+        public readonly _title: string,
+        public readonly _descriptions: string[],
+        public readonly _images: string[]
     ) {
     }
 

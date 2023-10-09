@@ -6,6 +6,7 @@ import OptionalTrip from "@/views/component/OptionalTrip.vue";
 import {OptionalTrip as ModelOptionalTrip} from "@/models/OptionalTrip";
 import {Search as ModelSearch} from "@/models/Search";
 import {PageTrip as ModelPageTrip} from "@/models/PageTrip";
+import type {SourceInterface} from "@/models/SourceInterface";
 
 export default defineComponent({
   components: {TripPage, OptionalTrip},
@@ -45,26 +46,17 @@ export default defineComponent({
       this.optionalTrips = [];
       this.searching();
     },
-    uniqueSource: function (input: ModelPageTrip[] | ModelOptionalTrip[]) {
+    uniqueSource: function (input: SourceInterface[]): string[] {
       return input.map((value) => value.source).filter(function (value, index, self) {
         return self.indexOf(value) === index;
       });
     },
-    parseNamespace: function (input: string | string[]) {
-      return typeof input === 'string' ? input.split('\\').pop() : input.map(this.parseNamespace);
-    },
-    parseError: function (input: object) {
-      let error = [];
-
-      for (const key of Object.keys(input)) {
-        error.push(this.parseNamespace(key) + ' ' + input[key])
-      }
-
-      return error;
+    parseNamespace: function (input: string ): string {
+      return input.split('\\').pop() ?? '';
     },
     isDisabled: function (namespace: string): boolean {
-      return this.pageTrips.filter((pageTrip: ModelPageTrip) => pageTrip.source === namespace).length === 0 &&
-          this.optionalTrips.filter((optinalTrip: ModelOptionalTrip) => optinalTrip.source === namespace).length === 0;
+      return this.pageTrips.filter((pageTrip) => pageTrip.source === namespace).length === 0 &&
+          this.optionalTrips.filter((optionalTrip) => optionalTrip.source === namespace).length === 0;
     }
   }
 });
@@ -107,7 +99,7 @@ export default defineComponent({
         </div>
         <div class="col-6" v-if="searchData.finished && searchData.errors.length">
           <ol class="text-light">
-            <li v-for="error in parseError(searchData.errors)">{{ error }}</li>
+            <li v-for="error in searchData.errors">{{ error.service }}</li>
           </ol>
         </div>
       </div>
@@ -117,13 +109,13 @@ export default defineComponent({
   <div class="container mt-2">
     <div v-for="service in uniqueSource(pageTrips)">
       <h2 class="text-success" v-bind:id="parseNamespace(service)">{{ parseNamespace(service) }}</h2>
-      <trip-page v-bind:page-trip="tripPage"
-                 v-for="tripPage in pageTrips.filter((pageTrip: ModelPageTrip) => pageTrip.source === service)"/>
+      <trip-page :page-trip="tripPage" v-for="tripPage in pageTrips.filter((pageTrip) => pageTrip.source === service)"/>
     </div>
     <div v-for="service in uniqueSource(optionalTrips)">
       <h2 class="text-success" v-bind:id="parseNamespace(service)">{{ parseNamespace(service) }}</h2>
-      <optional-trip v-bind:optional-trip="optionalTrip"
-                     v-for="optionalTrip in optionalTrips.filter((optionalTrip: OptionalTrip) => optionalTrip.source === service)"/>
+      <div v-for="optionalTrip in optionalTrips.filter((optionalTrip) => optionalTrip.source === service)">
+        <optional-trip :optional-trip="optionalTrip"/>
+      </div>
     </div>
   </div>
 </template>
