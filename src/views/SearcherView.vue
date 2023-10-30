@@ -6,6 +6,7 @@ import OptionalTrip from "@/views/component/OptionalTrip.vue";
 import {OptionalTrip as ModelOptionalTrip} from "@/models/OptionalTrip";
 import {Search as ModelSearch} from "@/models/Search";
 import {PageTrip as ModelPageTrip} from "@/models/PageTrip";
+import {fromString} from "@/parser/namespace";
 import type {SourceInterface} from "@/models/SourceInterface";
 
 export default defineComponent({
@@ -22,10 +23,15 @@ export default defineComponent({
     }
   },
   methods: {
-    searching: async function () {
+    searching: async function (id: null | number = null) {
       this.timer = new Date();
-      this.searchData = await travel.search(this.nation, this.place, this.force);
+      this.searchData = id ? await travel.get(id) : await travel.search(this.nation, this.place, this.force);
       this.force = false;
+
+      if (!this.nation || !this.place) {
+        this.nation = this.searchData.nation;
+        this.place = this.searchData.place;
+      }
 
       for (const service of this.searchData.services) {
         if (service.includes('PageAttraction')) {
@@ -51,14 +57,19 @@ export default defineComponent({
         return self.indexOf(value) === index;
       });
     },
-    parseNamespace: function (input: string ): string {
-      return input.split('\\').pop() ?? '';
+    parseNamespace: function (input: string): string {
+      return fromString(input);
     },
     isDisabled: function (namespace: string): boolean {
       return this.pageTrips.filter((pageTrip) => pageTrip.source === namespace).length === 0 &&
           this.optionalTrips.filter((optionalTrip) => optionalTrip.source === namespace).length === 0;
     }
-  }
+  },
+  async created() {
+    if(this.$route.params.id !== undefined && typeof this.$route.params.id === 'string') {
+      this.searching(parseInt(this.$route.params.id));
+    }
+  },
 });
 </script>
 
@@ -78,7 +89,7 @@ export default defineComponent({
         <input type="checkbox" class="form-check-input mt-2" id="force" v-model="force">
       </div>
       <div class="col-12 text-end">
-        <button type="submit" class="btn btn-success" @click="search">Search</button>
+        <button type="submit" class="btn btn-success" @click="search" :disabled="!nation || !place">Search</button>
       </div>
     </div>
   </div>
@@ -86,21 +97,17 @@ export default defineComponent({
   <nav class="bg-success sticky-top py-2" v-if="searchData">
     <div class="container">
       <div class="row">
-        <div v-bind:class="[searchData && searchData.finished && searchData.errors.length ? 'col-6' : 'col-12']">
-          <a v-bind:href="isDisabled(namespace) ? '' : ('#'+parseNamespace(namespace))"
+        <div class="col-12">
+          <a v-bind:href="isDisabled(namespace) ? '#' : ('#'+parseNamespace(namespace))"
              v-for="namespace in searchData.services">
             <button type="button" :disabled="isDisabled(namespace)" class="btn btn-dark me-2">
               {{ parseNamespace(namespace) }}
+              ({{ (optionalTrips as SourceInterface[]).concat(pageTrips).filter((optionalTrip) => optionalTrip.source === namespace).length ?? 0 }})
             </button>
           </a>
           <button v-if="!searchData.finished" class="btn btn-dark" disabled type="button">
             [{{ timer.toTimeString().split(' ')[0] }}] Downloading...
           </button>
-        </div>
-        <div class="col-6" v-if="searchData.finished && searchData.errors.length">
-          <ol class="text-light">
-            <li v-for="error in searchData.errors">{{ error.service }}</li>
-          </ol>
         </div>
       </div>
     </div>
