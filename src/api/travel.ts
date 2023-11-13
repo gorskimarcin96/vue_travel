@@ -6,19 +6,28 @@ import {TripArticle} from "@/models/PageArticle";
 import {Money} from "@/models/Money";
 import {fromObject as fromObjectToErrors} from "@/parser/error";
 import {fromObject as fromObjectToCountServices} from "@/parser/countService";
+import {Hotel} from "@/models/Hotel";
 
 class travel {
-    static async search(nation: string, place: string, force: boolean = false): Promise<Search> {
+    static async search(nation: string, place: string, from: string, to: string, adults: number, children: number, force: boolean = false): Promise<Search> {
         return axios
             .post(`${import.meta.env.VITE_API_URL}/search`, {
-                "nation": nation,
-                "place": place,
-                "force": force
+                nation: nation,
+                place: place,
+                from: from,
+                to: to,
+                adults: adults,
+                children: children,
+                force: force
             }, {headers: {Accept: 'application/json'}})
             .then((response) => new Search(
                 response.data.id,
                 response.data.nation,
                 response.data.place,
+                response.data.from,
+                response.data.to,
+                response.data.adults,
+                response.data.children,
                 response.data.services,
                 fromObjectToErrors(response.data.errors),
                 response.data.createdAt,
@@ -35,6 +44,10 @@ class travel {
                 response.data.id,
                 response.data.nation,
                 response.data.place,
+                response.data.from,
+                response.data.to,
+                response.data.adults,
+                response.data.children,
                 response.data.services,
                 fromObjectToErrors(response.data.errors),
                 response.data.createdAt,
@@ -53,6 +66,10 @@ class travel {
                 data.id,
                 data.nation,
                 data.place,
+                data.from,
+                data.to,
+                data.adults,
+                data.children,
                 data.services,
                 fromObjectToErrors(data.errors),
                 data.createdAt,
@@ -96,6 +113,25 @@ class travel {
                     data.images,
                 )),
                 data.source
+            )));
+    }
+
+    static async getHotels(searchId: number, source: string): Promise<Hotel[]> {
+        return axios
+            .get(`${import.meta.env.VITE_API_URL}/hotels`, {
+                params: {search: searchId, source: source},
+                headers: {Accept: 'application/json'}
+            })
+            .then((response) => response.data.map((data: any) => new Hotel(
+                data.id,
+                data.url,
+                data.title,
+                data.address,
+                data.descriptions,
+                data.image,
+                data.rate,
+                new Money(data.money.price, data.money.currency),
+                data.source,
             )));
     }
 }

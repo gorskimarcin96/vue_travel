@@ -3,7 +3,7 @@ import {defineComponent} from 'vue';
 import travel from "@/api/travel";
 import type {Search} from "@/models/Search";
 import {RouterLink} from "vue-router";
-import {fromStringToDateTimeString} from "@/parser/datetime";
+import {fromStringToDateString, fromStringToDateTimeString} from "@/parser/datetime";
 import {fromString} from "@/parser/namespace";
 
 export default defineComponent({
@@ -15,6 +15,9 @@ export default defineComponent({
     }
   },
   methods: {
+    parseDate: function (input: string) {
+      return fromStringToDateString(input);
+    },
     parseDateTime: function (input: string) {
       return fromStringToDateTimeString(input);
     },
@@ -36,6 +39,10 @@ export default defineComponent({
       <tr>
         <th>Nation</th>
         <th>Place</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Adults</th>
+        <th>Children</th>
         <th>Errors</th>
         <th>Completed</th>
         <th>Services</th>
@@ -45,7 +52,7 @@ export default defineComponent({
       </thead>
       <tbody v-if="!isLoaded">
       <tr>
-        <td colspan="7" class="text-center">
+        <td colspan="11" class="text-center">
           <div class="spinner-border m-2" role="status"></div>
         </td>
       </tr>
@@ -54,6 +61,10 @@ export default defineComponent({
       <tr v-for="search in searches">
         <td>{{ search.nation }}</td>
         <td>{{ search.place }}</td>
+        <td class="w-100px">{{ parseDate(search.from) }}</td>
+        <td class="w-100px">{{ parseDate(search.to) }}</td>
+        <td>{{ search.adults }}</td>
+        <td>{{ search.children }}</td>
         <td>
           <div v-for="searchError in search.errors">
             <p>{{ parseNamespace(searchError.service) }}</p>
@@ -71,7 +82,7 @@ export default defineComponent({
               {{ parseNamespace(counter.service) }} {{ counter.count }}
             </span>
         </td>
-        <td>{{ parseDateTime(search.createdAt) }}</td>
+        <td class="w-170px">{{ parseDateTime(search.createdAt) }}</td>
         <td>
           <RouterLink :to="'/searcher/' + search.id">Show</RouterLink>
         </td>
@@ -80,3 +91,13 @@ export default defineComponent({
     </table>
   </div>
 </template>
+
+<style>
+.w-100px {
+  width: 100px
+}
+
+.w-170px {
+  width: 170px
+}
+</style>

@@ -6,6 +6,10 @@ export class Search {
         private readonly _id: number,
         private readonly _nation: string,
         private readonly _place: string,
+        private readonly _from: string,
+        private readonly _to: string,
+        private readonly _adults: number,
+        private readonly _children: number,
         private readonly _services: string[],
         private readonly _errors: Error[],
         private readonly _createdAt: string,
@@ -25,6 +29,22 @@ export class Search {
 
     get place(): string {
         return this._place;
+    }
+
+    get from(): string {
+        return this._from;
+    }
+
+    get to(): string {
+        return this._to;
+    }
+
+    get adults(): number {
+        return this._adults;
+    }
+
+    get children(): number {
+        return this._children;
     }
 
     get services(): string[] {
