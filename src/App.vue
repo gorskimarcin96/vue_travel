@@ -6,10 +6,10 @@ import {RouterLink, RouterView} from 'vue-router'
   <header class="mt-3 border-success">
     <nav class="nav nav-tabs border-success container px-3">
       <RouterLink class="btn border-bottom-0 rounded-bottom-0 mx-1 border-success text-success" to="/searcher">
-        Searcher
+        {{ $t('main.searcher') }}
       </RouterLink>
       <RouterLink class="btn border-bottom-0 rounded-bottom-0 mx-1 border-success text-success" to="/searcher/history">
-        Searcher history
+        {{ $t('main.searcher_history') }}
       </RouterLink>
     </nav>
   </header>

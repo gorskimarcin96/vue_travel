@@ -1,0 +1,26 @@
+{
+  "main": {
+    "searcher": "Wyszukiwarka",
+    "searcher_history": "Historia wyszukiwań",
+    "nation": "Kraj",
+    "place": "Miejsce",
+    "from": "Od",
+    "to": "Do",
+    "adults": "Dorośli",
+    "children": "Dzieci",
+    "errors": "Błedy",
+    "searching_finished": "Wyszukiwanie skończone",
+    "services": "Serwisy",
+    "created_at": "Utworzony",
+    "actions": "Akcje",
+    "yes": "tak",
+    "no": "nie",
+    "show": "pokaż",
+    "force_search": "Wymuś wyszukiwanie",
+    "search": "Szukaj",
+    "price_for_night": "Cena za noc",
+    "rate": "Ocena",
+    "details": "Detale",
+    "link_to_map": "Link do mapy"
+  }
+}

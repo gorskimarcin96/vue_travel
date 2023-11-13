@@ -7,7 +7,7 @@ export class OptionalTrip implements SourceInterface {
         public readonly _title: string,
         public readonly _description: string[],
         public readonly _url: string,
-        public readonly _img: string,
+        public readonly _image: string,
         public readonly _source: string,
         public readonly _money: Money | null
     ) {
@@ -29,8 +29,8 @@ export class OptionalTrip implements SourceInterface {
         return this._url;
     }
 
-    get img(): string {
-        return this._img;
+    get image(): string {
+        return this._image;
     }
 
     get source(): string {

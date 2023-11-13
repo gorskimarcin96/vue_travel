@@ -27,7 +27,7 @@ export default defineComponent({
     </div>
     <div class="card-body row">
       <div class="col-4">
-        <img class="card-img-bottom" v-bind:src="optionalTrip.img" v-bind:alt="optionalTrip.title">
+        <img class="card-img-bottom" v-bind:src="optionalTrip.image" v-bind:alt="optionalTrip.title">
       </div>
       <div class="col-8">
         <ul class="list-group list-group-flush">

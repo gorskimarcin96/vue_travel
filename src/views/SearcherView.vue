@@ -114,35 +114,35 @@ export default defineComponent({
   <div class="container">
     <div class="row border border-success rounded mb-3 p-3 text-white" v-on:keyup.enter="onEnter">
       <div class="col-3 mt-2">
-        <label for="nation" class="form-label">Nation</label>
+        <label for="nation" class="form-label">{{ $t('main.nation') }}</label>
         <input type="text" class="form-control" id="nation" v-model="nation">
       </div>
       <div class="col-3 mt-2">
-        <label for="place" class="form-label">Place</label>
+        <label for="place" class="form-label">{{ $t('main.place') }}</label>
         <input type="text" class="form-control" id="place" v-model="place">
       </div>
       <div class="col-3 mt-2">
-        <label for="from" class="form-label">From</label>
+        <label for="from" class="form-label">{{ $t('main.from') }}</label>
         <input type="date" class="form-control" id="from" v-model="from">
       </div>
       <div class="col-3 mt-2">
-        <label for="to" class="form-label">To</label>
+        <label for="to" class="form-label">{{ $t('main.to') }}</label>
         <input type="date" class="form-control" id="to" v-model="to">
       </div>
       <div class="col-3 mt-2">
-        <label for="adults" class="form-label">Adults</label>
+        <label for="adults" class="form-label">{{ $t('main.adults') }}</label>
         <input type="number" class="form-control" id="adults" min="1" step="1" pattern="\d+" v-model="adults">
       </div>
       <div class="col-3 mt-2">
-        <label for="children" class="form-label">Children</label>
+        <label for="children" class="form-label">{{ $t('main.children') }}</label>
         <input type="number" class="form-control" id="children" min="0" step="1" pattern="\d+" v-model="children">
       </div>
       <div class="col-3 mt-2">
-        <div><label class="form-check-label" for="force">Force</label></div>
+        <div><label class="form-check-label" for="force">{{ $t('main.force_search') }}</label></div>
         <input type="checkbox" class="form-check-input" id="force" v-model="force">
       </div>
       <div class="col-12 text-end">
-        <button type="submit" class="btn btn-success" @click="search" v-bind:disabled="saveIsDisabled">Search</button>
+        <button type="submit" class="btn btn-success" @click="search" v-bind:disabled="saveIsDisabled">{{ $t('main.search') }}</button>
       </div>
     </div>
   </div>

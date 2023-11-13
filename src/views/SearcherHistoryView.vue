@@ -37,17 +37,17 @@ export default defineComponent({
     <table class="table table-dark mb-0">
       <thead>
       <tr>
-        <th>Nation</th>
-        <th>Place</th>
-        <th>From</th>
-        <th>To</th>
-        <th>Adults</th>
-        <th>Children</th>
-        <th>Errors</th>
-        <th>Completed</th>
-        <th>Services</th>
-        <th>Created at</th>
-        <th>Actions</th>
+        <th>{{ $t('main.nation') }}</th>
+        <th>{{ $t('main.place') }}</th>
+        <th>{{ $t('main.from') }}</th>
+        <th>{{ $t('main.to') }}</th>
+        <th>{{ $t('main.adults') }}</th>
+        <th>{{ $t('main.children') }}</th>
+        <th>{{ $t('main.errors') }}</th>
+        <th>{{ $t('main.searching_finished') }}</th>
+        <th>{{ $t('main.services') }}</th>
+        <th>{{ $t('main.created_at') }}</th>
+        <th>{{ $t('main.actions') }}</th>
       </tr>
       </thead>
       <tbody v-if="!isLoaded">
@@ -74,8 +74,8 @@ export default defineComponent({
           </div>
         </td>
         <td>
-          <span v-if="search.finished" class="badge bg-success">Yes</span>
-          <span v-else class="badge bg-danger">No</span>
+          <span v-if="search.finished" class="badge bg-success">{{ $t('main.yes') }}</span>
+          <span v-else class="badge bg-danger">{{ $t('main.no') }}</span>
         </td>
         <td>
             <span class="badge bg-light text-dark ms-1" v-for="counter in search.countServices">
@@ -84,7 +84,7 @@ export default defineComponent({
         </td>
         <td class="w-170px">{{ parseDateTime(search.createdAt) }}</td>
         <td>
-          <RouterLink :to="'/searcher/' + search.id">Show</RouterLink>
+          <RouterLink :to="'/searcher/' + search.id">{{ $t('main.show') }}</RouterLink>
         </td>
       </tr>
       </tbody>

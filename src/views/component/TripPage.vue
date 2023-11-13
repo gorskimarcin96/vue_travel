@@ -54,7 +54,7 @@ export default defineComponent({
     <div class="card-body" v-if="pageTrip.map">
       <iframe v-bind:src="pageTrip.map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-100"
               height="500"/>
-      <a v-bind:href="pageTrip.map">Link to map.</a>
+      <a v-bind:href="pageTrip.map">{{ $t('main.link_to_map') }}.</a>
     </div>
   </div>
 </template>

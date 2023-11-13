@@ -90,7 +90,7 @@ class travel {
                 data.title,
                 data.description,
                 data.url,
-                data.img,
+                data.image,
                 data.source,
                 data.money ? new Money(data.money.price, data.money.currency) : null,
             )));

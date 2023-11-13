@@ -30,15 +30,15 @@ export default defineComponent({
       </div>
       <div class="col-8">
         <div class="my-1">
-          Price for night:
+          {{ $t('main.price_for_night') }}:
           <money v-if="hotel.money" v-bind:money="hotel.money" v-bind:cssClass="'text-success fw-bolder'"/>
         </div>
         <div class="my-1" v-if="hotel.rate">
-          Rate:
+          {{ $t('main.rate') }}:
           <span class="text-success fw-bolder">{{ hotel.rate }}</span>
         </div>
         <div class="my-1">
-          Details:
+          {{ $t('main.details') }}:
           <ul>
             <li v-for="description in hotel.descriptions">{{ description }}</li>
           </ul>
