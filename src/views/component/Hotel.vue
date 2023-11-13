@@ -2,15 +2,30 @@
 import {defineComponent} from 'vue';
 import type {PropType} from 'vue';
 import Money from "@/views/component/Money.vue";
-import {Hotel as ModelHotel} from "@/models/Hotel";
+import {Hotel as HotelModel} from "@/models/Hotel";
+import {Money as MoneyModel} from "@/models/Money";
 
 export default defineComponent({
+  computed: {
+    Money() {
+      return Money
+    }
+  },
   components: {Money},
   props: {
     hotel: {
-      type: Object as PropType<ModelHotel>,
+      type: Object as PropType<HotelModel>,
+      required: true
+    },
+    nightNumber: {
+      type: Number,
       required: true
     }
+  },
+  methods: {
+    getMainPrice() {
+      return new MoneyModel(this.hotel.money.price * this.nightNumber, this.hotel.money.currency);
+    },
   }
 });
 </script>
@@ -30,8 +45,12 @@ export default defineComponent({
       </div>
       <div class="col-8">
         <div class="my-1">
+          {{ $t('main.price') }}:
+          <money v-bind:money="getMainPrice()" v-bind:cssClass="'text-success fw-bolder'"/>
+        </div>
+        <div class="my-1">
           {{ $t('main.price_for_night') }}:
-          <money v-if="hotel.money" v-bind:money="hotel.money" v-bind:cssClass="'text-success fw-bolder'"/>
+          <money v-bind:money="hotel.money" v-bind:cssClass="'text-success fw-bolder'"/>
         </div>
         <div class="my-1" v-if="hotel.rate">
           {{ $t('main.rate') }}:

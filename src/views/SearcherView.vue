@@ -97,6 +97,9 @@ export default defineComponent({
 
       return date;
     },
+    getBetweenDays: function () {
+      return (new Date(this.to) - new Date(this.from)) / (1000 * 3600 * 24);
+    }
   },
   async created() {
     const date = new Date();
@@ -141,6 +144,9 @@ export default defineComponent({
         <div><label class="form-check-label" for="force">{{ $t('main.force_search') }}</label></div>
         <input type="checkbox" class="form-check-input" id="force" v-model="force">
       </div>
+      <div class="col-3 mt-2 text-end">
+        {{ $t('main.trip_period') }} <span class="text-success fw-bolder">{{ getBetweenDays() }}</span> {{ $t('main.days') }}.
+      </div>
       <div class="col-12 text-end">
         <button type="submit" class="btn btn-success" @click="search" v-bind:disabled="saveIsDisabled">{{ $t('main.search') }}</button>
       </div>
@@ -173,7 +179,7 @@ export default defineComponent({
       <h2 class="text-success" v-bind:id="parseNamespace(service)">{{ parseNamespace(service) }}</h2>
       <div class="row">
         <div class="col-6" v-for="hotel in hotels.filter((hotel) => hotel.source === service)">
-          <hotel :hotel="hotel"/>
+          <hotel :hotel="hotel" :nightNumber="getBetweenDays() - 1"/>
         </div>
       </div>
     </div>

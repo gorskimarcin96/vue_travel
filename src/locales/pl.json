@@ -21,6 +21,9 @@
     "price_for_night": "Cena za noc",
     "rate": "Ocena",
     "details": "Detale",
-    "link_to_map": "Link do mapy"
+    "link_to_map": "Link do mapy",
+    "trip_period": "Okres wycieczki",
+    "days": "dni",
+    "price": "Cena"
   }
 }
