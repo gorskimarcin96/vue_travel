@@ -73,16 +73,16 @@ export default defineComponent({
       for (const service of this.searchData.services) {
         if (service.includes('PageAttraction')) {
           (await travel.getPageTrips(this.searchData.id, service))
-              .map((pageTrip: ModelPageTrip) => this.pageTrips.push(pageTrip));
+              .map((pageTrip: ModelPageTrip) => this.pageTrips.filter(item => item.id === pageTrip.id).length ? {} : this.pageTrips.push(pageTrip));
         } else if (service.includes('OptionalTrip')) {
           (await travel.getOptionalTrips(this.searchData.id, service))
-              .map((optionalTrip: ModelOptionalTrip) => this.optionalTrips.push(optionalTrip));
+              .map((optionalTrip: ModelOptionalTrip) => this.optionalTrips.filter(item => item.id === optionalTrip.id).length ? {} : this.optionalTrips.push(optionalTrip));
         } else if (service.includes('Hotel')) {
           (await travel.getHotels(this.searchData.id, service))
-              .map((hotel: ModelHotel) => this.hotels.push(hotel));
+              .map((hotel: ModelHotel) => this.hotels.filter(item => item.id === hotel.id).length ? {} : this.hotels.push(hotel));
         } else if (service.includes('Flight')) {
           (await travel.getFlights(this.searchData.id, service))
-              .map((flight: ModelFlight) => this.flights.push(flight));
+              .map((flight: ModelFlight) => this.flights.filter(item => item.id === flight.id).length ? {} : this.flights.push(flight));
         }
       }
 
