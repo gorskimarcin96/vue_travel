@@ -24,6 +24,24 @@
     "link_to_map": "Link do mapy",
     "trip_period": "Okres wycieczki",
     "days": "dni",
-    "price": "Cena"
+    "price": "Cena",
+    "filters": "Filtry",
+    "show_hotels": "Pokaż hotele",
+    "show_flights": "Pokaż loty",
+    "show_travel_pages": "Pokaż podróżnicze strony",
+    "show_trips": "Pokaż wycieczki",
+    "from_airport": "Z lotniska",
+    "to_airport": "Do lotniska",
+    "try_using_polish_sentence": "Staraj się używać polskich nazw",
+    "search_new_data": "Wyszukuje nowe dane, ignorując dane archiwalne.",
+    "hotels": "Hotele",
+    "flights": "Loty",
+    "travel_pages": "Podróżnicze strony",
+    "airport": "Lotnisko",
+    "trips": "Wycieczki",
+    "start": "Start",
+    "end": "Koniec",
+    "stops": "Przesiadki",
+    "downloading": "Pobieranie"
   }
 }

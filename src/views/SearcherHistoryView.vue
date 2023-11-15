@@ -32,21 +32,27 @@ export default defineComponent({
 });
 </script>
 
+<style>
+.max-width-200px {
+  max-width: 200px;
+}
+</style>
+
 <template>
-  <div class="container border border-success rounded mb-3 p-3 text-white">
-    <table class="table table-dark mb-0">
+  <div class="container border border-success rounded mb-3 p-1 text-white bg-dark">
+    <table class="table table-dark mb-0 rounded">
       <thead>
       <tr>
         <th>{{ $t('main.nation') }}</th>
         <th>{{ $t('main.place') }}</th>
-        <th>{{ $t('main.from') }}</th>
-        <th>{{ $t('main.to') }}</th>
+        <th class="w-100px">{{ $t('main.from') }}</th>
+        <th class="w-100px">{{ $t('main.to') }}</th>
         <th>{{ $t('main.adults') }}</th>
         <th>{{ $t('main.children') }}</th>
         <th>{{ $t('main.errors') }}</th>
         <th>{{ $t('main.searching_finished') }}</th>
         <th>{{ $t('main.services') }}</th>
-        <th>{{ $t('main.created_at') }}</th>
+        <th class="w-170px">{{ $t('main.created_at') }}</th>
         <th>{{ $t('main.actions') }}</th>
       </tr>
       </thead>
@@ -61,16 +67,16 @@ export default defineComponent({
       <tr v-for="search in searches">
         <td>{{ search.nation }}</td>
         <td>{{ search.place }}</td>
-        <td class="w-100px">{{ parseDate(search.from) }}</td>
-        <td class="w-100px">{{ parseDate(search.to) }}</td>
+        <td>{{ parseDate(search.from) }}</td>
+        <td>{{ parseDate(search.to) }}</td>
         <td>{{ search.adults }}</td>
         <td>{{ search.children }}</td>
         <td>
-          <div v-for="searchError in search.errors">
-            <p>{{ parseNamespace(searchError.service) }}</p>
-            <ol class="text-light">
-              <li v-for="error in searchError.errors">{{ error }}</li>
-            </ol>
+          <div class="card bg-danger text-light mb-2 max-width-200px" v-for="searchError in search.errors">
+            <div class="card-header">{{ searchError.service }}</div>
+            <div class="card-body">
+              <p v-for="error in searchError.errors" class="card-text">{{ error }}</p>
+            </div>
           </div>
         </td>
         <td>
@@ -82,7 +88,7 @@ export default defineComponent({
               {{ parseNamespace(counter.service) }} {{ counter.count }}
             </span>
         </td>
-        <td class="w-170px">{{ parseDateTime(search.createdAt) }}</td>
+        <td>{{ parseDateTime(search.createdAt) }}</td>
         <td>
           <RouterLink :to="'/searcher/' + search.id">{{ $t('main.show') }}</RouterLink>
         </td>

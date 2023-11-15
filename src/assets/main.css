@@ -62,3 +62,20 @@ a:hover {
     --bs-btn-disabled-border-color: var(--main-color);
     --bs-gradient: none;
 }
+
+.form-check-input:checked {
+    background-color: var(--main-color) !important;
+    border: 0;
+}
+
+.form-check-input:focus {
+    box-shadow: 0 0 0 1px var(--main-color)
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.text-muted {
+    color: #dee2e6 !important;
+}

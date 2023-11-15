@@ -7,20 +7,16 @@ import {Money} from "@/models/Money";
 import {fromObject as fromObjectToErrors} from "@/parser/error";
 import {fromObject as fromObjectToCountServices} from "@/parser/countService";
 import {Hotel} from "@/models/Hotel";
+import type {SearchInput} from "@/models/SearchInput";
+import {Flight} from "@/models/Flight";
 
 class travel {
-    static async search(nation: string, place: string, from: string, to: string, adults: number, children: number, force: boolean = false): Promise<Search> {
+    static async search(input: SearchInput): Promise<Search> {
         return axios
-            .post(`${import.meta.env.VITE_API_URL}/search`, {
-                nation: nation,
-                place: place,
-                from: from,
-                to: to,
-                adults: adults,
-                children: children,
-                force: force
-            }, {headers: {Accept: 'application/json'}})
-            .then((response) => new Search(
+            .post(`${import.meta.env.VITE_API_URL}/search`,
+                input.toPayload(),
+                {headers: {Accept: 'application/json'}}
+            ).then((response) => new Search(
                 response.data.id,
                 response.data.nation,
                 response.data.place,
@@ -28,6 +24,8 @@ class travel {
                 response.data.to,
                 response.data.adults,
                 response.data.children,
+                response.data.fromAirport,
+                response.data.toAirport,
                 response.data.services,
                 fromObjectToErrors(response.data.errors),
                 response.data.createdAt,
@@ -48,6 +46,8 @@ class travel {
                 response.data.to,
                 response.data.adults,
                 response.data.children,
+                response.data.fromAirport,
+                response.data.toAirport,
                 response.data.services,
                 fromObjectToErrors(response.data.errors),
                 response.data.createdAt,
@@ -68,6 +68,8 @@ class travel {
                 data.place,
                 data.from,
                 data.to,
+                data.fromAirport,
+                data.toAirport,
                 data.adults,
                 data.children,
                 data.services,
@@ -130,6 +132,28 @@ class travel {
                 data.descriptions,
                 data.image,
                 data.rate,
+                new Money(data.money.price, data.money.currency),
+                data.source,
+            )));
+    }
+
+    static async getFlights(searchId: number, source: string): Promise<Flight[]> {
+        return axios
+            .get(`${import.meta.env.VITE_API_URL}/flights`, {
+                params: {search: searchId, source: source},
+                headers: {Accept: 'application/json'}
+            })
+            .then((response) => response.data.map((data: any) => new Flight(
+                data.id,
+                data.fromAirport,
+                data.fromStart,
+                data.fromEnd,
+                data.fromStops,
+                data.toAirport,
+                data.toStart,
+                data.toEnd,
+                data.toStops,
+                data.url,
                 new Money(data.money.price, data.money.currency),
                 data.source,
             )));

@@ -24,7 +24,7 @@ export default defineComponent({
   },
   methods: {
     getMainPrice() {
-      return new MoneyModel(this.hotel.money.price * this.nightNumber, this.hotel.money.currency);
+      return new MoneyModel(Math.round(this.hotel.money.price * this.nightNumber * 100) / 100, this.hotel.money.currency);
     },
   }
 });

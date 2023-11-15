@@ -10,6 +10,8 @@ export class Search {
         private readonly _to: string,
         private readonly _adults: number,
         private readonly _children: number,
+        private readonly _fromAirport: string,
+        private readonly _toAirport: string,
         private readonly _services: string[],
         private readonly _errors: Error[],
         private readonly _createdAt: string,
@@ -45,6 +47,14 @@ export class Search {
 
     get children(): number {
         return this._children;
+    }
+
+    get fromAirport(): string {
+        return this._fromAirport;
+    }
+
+    get toAirport(): string {
+        return this._toAirport;
     }
 
     get services(): string[] {
