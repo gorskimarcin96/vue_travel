@@ -117,11 +117,11 @@ export default defineComponent({
     getAnchorLink: function (input: string): string {
       return `${this.prefixFromNamespace(input)}${this.parseNamespace(input)}`;
     },
-    serviceIsDisabled: function (namespace: string): boolean {
-      return this.pageTrips.filter((pageTrip) => pageTrip.source === namespace).length === 0 &&
+    existsService: function (namespace: string): boolean {
+      return !(this.pageTrips.filter((pageTrip) => pageTrip.source === namespace).length === 0 &&
           this.optionalTrips.filter((optionalTrip) => optionalTrip.source === namespace).length === 0 &&
           this.hotels.filter((hotel) => hotel.source === namespace).length === 0 &&
-          this.flights.filter((flight) => flight.source === namespace).length === 0;
+          this.flights.filter((flight) => flight.source === namespace).length === 0);
     },
     countServices: function (namespace: string): number {
       return (this.optionalTrips as SourceInterface[])
@@ -312,11 +312,12 @@ ol.autocomplete {
   <nav class="bg-success sticky-top py-2" v-if="searchData">
     <div class="container">
       <div class="d-flex flex-row text-light">
+        <div class="border-end border-dark me-2"/>
         <div v-if="showHotels">
           <p class="pe-2">{{ $t('main.hotels') }}</p>
-          <a v-bind:href="serviceIsDisabled(namespace) ? '#' : `#${getAnchorLink(namespace)}`"
+          <a v-bind:href="existsService(namespace) ? `#${getAnchorLink(namespace)}` : '#'"
              v-for="namespace in searchData.services.filter((service) => service.includes('Hotel'))">
-            <button type="button" :disabled="serviceIsDisabled(namespace)" class="btn btn-dark me-2">
+            <button type="button" v-if="existsService(namespace)" class="btn btn-dark mt-2 me-2">
               {{ parseNamespace(namespace) }} ({{ countServices(namespace) }})
             </button>
           </a>
@@ -324,9 +325,9 @@ ol.autocomplete {
         <div class="border-end border-dark me-2" v-if="showHotels"/>
         <div v-if="showFlights">
           <p class="pe-2">{{ $t('main.flights') }}</p>
-          <a v-bind:href="serviceIsDisabled(namespace) ? '#' : `#${getAnchorLink(namespace)}`"
+          <a v-bind:href="existsService(namespace) ? `#${getAnchorLink(namespace)}` : '#'"
              v-for="namespace in searchData.services.filter((service) => service.includes('Flight'))">
-            <button type="button" :disabled="serviceIsDisabled(namespace)" class="btn btn-dark me-2">
+            <button type="button" v-if="existsService(namespace)" class="btn btn-dark mt-2 me-2">
               {{ parseNamespace(namespace) }} ({{ countServices(namespace) }})
             </button>
           </a>
@@ -334,9 +335,9 @@ ol.autocomplete {
         <div class="border-end border-dark me-2" v-if="showFlights"/>
         <div v-if="showTrips">
           <p class="pe-2">{{ $t('main.trips') }}</p>
-          <a v-bind:href="serviceIsDisabled(namespace) ? '#' : `#${getAnchorLink(namespace)}`"
+          <a v-bind:href="existsService(namespace) ? `#${getAnchorLink(namespace)}` : '#'"
              v-for="namespace in searchData.services.filter((service) => service.includes('OptionalTrip'))">
-            <button type="button" :disabled="serviceIsDisabled(namespace)" class="btn btn-dark me-2">
+            <button type="button" v-if="existsService(namespace)" class="btn btn-dark mt-2 me-2">
               {{ parseNamespace(namespace) }} ({{ countServices(namespace) }})
             </button>
           </a>
@@ -344,9 +345,9 @@ ol.autocomplete {
         <div class="border-end border-dark me-2" v-if="showTrips"/>
         <div v-if="showTravelPages">
           <p class="pe-2">{{ $t('main.travel_pages') }}</p>
-          <a v-bind:href="serviceIsDisabled(namespace) ? '#' : `#${getAnchorLink(namespace)}`"
+          <a v-bind:href="existsService(namespace) ? `#${getAnchorLink(namespace)}` : '#'"
              v-for="namespace in searchData.services.filter((service) => service.includes('PageAttraction'))">
-            <button type="button" :disabled="serviceIsDisabled(namespace)" class="btn btn-dark me-2">
+            <button type="button" v-if="existsService(namespace)" class="btn btn-dark mt-2 me-2">
               {{ parseNamespace(namespace) }} ({{ countServices(namespace) }})
             </button>
           </a>
@@ -355,14 +356,15 @@ ol.autocomplete {
         <div>
           <p class="pe-2">{{ $t('main.searcher') }}</p>
           <a href="#form">
-            <button type="button" class="btn btn-dark me-2">
+            <button type="button" class="btn btn-dark mt-2 me-2">
               {{ $t('main.searcher') }}
             </button>
           </a>
-          <button class="btn btn-dark" disabled type="button" v-if="!searchData.finished">
+          <button class="btn btn-dark mt-2 me-2" disabled type="button" v-if="!searchData.finished">
             [{{ timer.toTimeString().split(' ')[0] }}] {{ $t('main.downloading') }}...
           </button>
         </div>
+        <div class="border-end border-dark me-2"/>
       </div>
     </div>
   </nav>
