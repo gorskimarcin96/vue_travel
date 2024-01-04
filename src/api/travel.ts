@@ -9,6 +9,7 @@ import {fromObject as fromObjectToCountServices} from "@/parser/countService";
 import {Hotel} from "@/models/Hotel";
 import type {SearchInput} from "@/models/SearchInput";
 import {Flight} from "@/models/Flight";
+import {Weather} from "@/models/Weather";
 
 class travel {
     static async search(input: SearchInput): Promise<Search> {
@@ -158,6 +159,24 @@ class travel {
                 data.source,
             )));
     }
+
+    static async getWeathers(searchId: number, source: string): Promise<Weather[]> {
+        return axios
+            .get(`${import.meta.env.VITE_API_URL}/weather`, {
+                params: {search: searchId, source: source},
+                headers: {Accept: 'application/json'}
+            })
+            .then((response) => response.data.map((data: any) => new Weather(
+                data.id,
+                data.city.namePl,
+                data.date,
+                data.temperature2mMean,
+                data.precipitationHours,
+                data.precipitationSum,
+                data.source,
+            )));
+    }
+
 }
 
 export default travel

@@ -9,6 +9,7 @@ import {Search as ModelSearch} from "@/models/Search";
 import {PageTrip as ModelPageTrip} from "@/models/PageTrip";
 import {Hotel as ModelHotel} from "@/models/Hotel";
 import {Flight as ModelFlight} from "@/models/Flight";
+import {Weather as ModelWeather} from "@/models/Weather";
 import {fromString} from "@/parser/namespace";
 import type {SourceInterface} from "@/models/SourceInterface";
 import {fromStringToDateString} from "@/parser/datetime";
@@ -16,17 +17,19 @@ import flyCodesJson from "@/data/fly_codes.json";
 import {FlyCode} from "@/models/FlyCode";
 import {SearchInput} from "@/models/SearchInput";
 import Flight from "@/views/component/Flight.vue";
+import Weather from "@/views/component/Weather.vue";
 
 const flyCodes = flyCodesJson.map(flyCode => new FlyCode(flyCode.code, flyCode.city, flyCode.nation))
 
 export default defineComponent({
-  components: {Flight, TripPage, OptionalTrip, Hotel},
+  components: {Weather, Flight, TripPage, OptionalTrip, Hotel},
   data: function () {
     return {
       showHotels: true,
       showFlights: true,
       showTrips: true,
       showTravelPages: true,
+      showWeathers: true,
       fromAirport: '',
       fromAirportSuggestions: [] as FlyCode[],
       toAirport: '',
@@ -43,6 +46,7 @@ export default defineComponent({
       optionalTrips: [] as ModelOptionalTrip[],
       hotels: [] as ModelHotel[],
       flights: [] as ModelFlight[],
+      weathers: [] as ModelWeather[],
       timer: new Date(),
     }
   },
@@ -83,6 +87,9 @@ export default defineComponent({
         } else if (service.includes('Flight')) {
           (await travel.getFlights(this.searchData.id, service))
               .map((flight: ModelFlight) => this.flights.filter(item => item.id === flight.id).length ? {} : this.flights.push(flight));
+        } else if (service.includes('Weather')) {
+          (await travel.getWeathers(this.searchData.id, service))
+              .map((weather: ModelWeather) => this.weathers.filter(item => item.id === weather.id).length ? {} : this.weathers.push(weather));
         }
       }
 
@@ -112,7 +119,10 @@ export default defineComponent({
       return fromString(input);
     },
     prefixFromNamespace: function (input: string): string {
-      return input.replace("App\\Utils\\Crawler\\", "").replace("\\" + this.parseNamespace(input), "");
+      return input
+          .replace("App\\Utils\\Crawler\\", "")
+          .replace("App\\Utils\\Api\\", "")
+          .replace("\\" + this.parseNamespace(input), "");
     },
     getAnchorLink: function (input: string): string {
       return `${this.prefixFromNamespace(input)}${this.parseNamespace(input)}`;
@@ -121,13 +131,15 @@ export default defineComponent({
       return !(this.pageTrips.filter((pageTrip) => pageTrip.source === namespace).length === 0 &&
           this.optionalTrips.filter((optionalTrip) => optionalTrip.source === namespace).length === 0 &&
           this.hotels.filter((hotel) => hotel.source === namespace).length === 0 &&
-          this.flights.filter((flight) => flight.source === namespace).length === 0);
+          this.flights.filter((flight) => flight.source === namespace).length === 0 &&
+          this.weathers.filter((weather) => weather.source === namespace).length === 0);
     },
     countServices: function (namespace: string): number {
       return (this.optionalTrips as SourceInterface[])
           .concat(this.pageTrips)
           .concat(this.hotels)
           .concat(this.flights)
+          .concat(this.weathers)
           .filter((service) => service.source === namespace).length ?? 0
     },
     addDays: function (date: Date, days: number) {
@@ -238,6 +250,10 @@ ol.autocomplete {
         <div><label class="form-check-label" for="show_travel_pages">{{ $t('main.show_travel_pages') }}</label>
         </div>
         <input type="checkbox" class="form-check-input" id="show_travel_pages" v-model="showTravelPages">
+      </div>
+      <div class="col-sm-4 col-md-2 mt-2">
+        <div><label class="form-check-label" for="show_travel_pages">{{ $t('main.show_weathers') }}</label></div>
+        <input type="checkbox" class="form-check-input" id="show_travel_pages" v-model="showWeathers">
       </div>
       <div class="col-12 border-bottom border-success my-2"/>
       <div class="col-12">{{ $t('main.searcher') }}</div>
@@ -353,6 +369,16 @@ ol.autocomplete {
           </a>
         </div>
         <div class="border-end border-dark me-2" v-if="showTravelPages"/>
+        <div v-if="showWeathers">
+          <p class="pe-2">{{ $t('main.weather') }}</p>
+          <a v-bind:href="existsService(namespace) ? `#${getAnchorLink(namespace)}` : '#'"
+             v-for="namespace in searchData.services.filter((service) => service.includes('Weather'))">
+            <button type="button" v-if="existsService(namespace)" class="btn btn-dark mt-2 me-2">
+              {{ parseNamespace(namespace) }} ({{ countServices(namespace) }})
+            </button>
+          </a>
+        </div>
+        <div class="border-end border-dark me-2" v-if="showWeathers"/>
         <div>
           <p class="pe-2">{{ $t('main.searcher') }}</p>
           <a href="#form">
@@ -391,6 +417,10 @@ ol.autocomplete {
     <div v-for="service in uniqueSource(pageTrips)" v-if="showTravelPages">
       <h2 class="text-success" v-bind:id="getAnchorLink(service)">{{ parseNamespace(service) }}</h2>
       <trip-page :page-trip="tripPage" v-for="tripPage in pageTrips.filter((pageTrip) => pageTrip.source === service)"/>
+    </div>
+    <div v-for="service in uniqueSource(weathers)" v-if="showWeathers">
+      <h2 class="text-success" v-bind:id="getAnchorLink(service)">{{ parseNamespace(service) }}</h2>
+      <weather :weathers="weathers.filter((weather) => weather.source === service)"/>
     </div>
   </div>
 </template>
