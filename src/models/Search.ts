@@ -3,21 +3,21 @@ import type {CountService} from "@/models/CountService";
 
 export class Search {
     constructor(
-        private readonly _id: number,
-        private readonly _nation: string,
-        private readonly _place: string,
-        private readonly _from: string,
-        private readonly _to: string,
-        private readonly _adults: number,
-        private readonly _children: number,
-        private readonly _fromAirport: string,
-        private readonly _toAirport: string,
-        private readonly _services: string[],
-        private readonly _errors: Error[],
-        private readonly _createdAt: string,
-        private readonly _updatedAt: string,
-        private readonly _finished: boolean,
-        private readonly _countServices: CountService[]
+        public readonly _id: number,
+        public readonly _nation: string,
+        public readonly _place: string,
+        public readonly _from: string,
+        public readonly _to: string,
+        public readonly _adults: number,
+        public readonly _children: number,
+        public readonly _fromAirport: string,
+        public readonly _toAirport: string,
+        public readonly _services: string[],
+        public readonly _errors: Error[],
+        public readonly _createdAt: string,
+        public readonly _updatedAt: string,
+        public readonly _finished: boolean,
+        public readonly _countServices: CountService[]
     ) {
     }
 

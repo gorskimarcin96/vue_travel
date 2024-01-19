@@ -5,10 +5,10 @@ import {RouterLink, RouterView} from 'vue-router'
 <template>
   <header class="mt-3 border-success">
     <nav class="nav nav-tabs border-success container px-3">
-      <RouterLink class="btn border-bottom-0 rounded-bottom-0 mx-1 border-success text-success" to="/searcher">
+      <RouterLink class="btn border-bottom-0 rounded-bottom-0 mx-1 border-success text-success" to="/searcher" :key="$route.fullPath">
         {{ $t('main.searcher') }}
       </RouterLink>
-      <RouterLink class="btn border-bottom-0 rounded-bottom-0 mx-1 border-success text-success" to="/searcher/history">
+      <RouterLink class="btn border-bottom-0 rounded-bottom-0 mx-1 border-success text-success" to="/searcher/history" :key="$route.fullPath">
         {{ $t('main.searcher_history') }}
       </RouterLink>
     </nav>

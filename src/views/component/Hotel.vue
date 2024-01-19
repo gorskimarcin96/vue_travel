@@ -4,6 +4,7 @@ import type {PropType} from 'vue';
 import Money from "@/views/component/Money.vue";
 import {Hotel as HotelModel} from "@/models/Hotel";
 import {Money as MoneyModel} from "@/models/Money";
+import {foodStringToTranslate} from "@/helper/foodTranslate";
 
 export default defineComponent({
   computed: {
@@ -23,6 +24,7 @@ export default defineComponent({
     }
   },
   methods: {
+    foodStringToTranslate,
     getMainPrice() {
       return new MoneyModel(Math.round(this.hotel.money.price * this.nightNumber * 100) / 100, this.hotel.money.currency);
     },
@@ -52,11 +54,19 @@ export default defineComponent({
           {{ $t('main.price_for_night') }}:
           <money v-bind:money="hotel.money" v-bind:cssClass="'text-success fw-bolder'"/>
         </div>
+        <div class="my-1" v-if="hotel.stars">
+          {{ $t('main.hotel') }}:
+          <span v-for="i in Array(hotel.stars)">⭐</span>
+        </div>
         <div class="my-1" v-if="hotel.rate">
           {{ $t('main.rate') }}:
           <span class="text-success fw-bolder">{{ hotel.rate }}</span>
         </div>
         <div class="my-1">
+          {{ $t('main.food') }}:
+          <span class="text-success fw-bolder">{{ $t(foodStringToTranslate(hotel.food)) }}</span>
+        </div>
+        <div class="my-1" v-if="hotel.descriptions.length">
           {{ $t('main.details') }}:
           <ul>
             <li v-for="description in hotel.descriptions">{{ description }}</li>

@@ -4,8 +4,8 @@ import {OptionalTrip} from "@/models/OptionalTrip";
 import {PageTrip} from "@/models/PageTrip";
 import {TripArticle} from "@/models/PageArticle";
 import {Money} from "@/models/Money";
-import {fromObject as fromObjectToErrors} from "@/parser/error";
-import {fromObject as fromObjectToCountServices} from "@/parser/countService";
+import {fromObject as fromObjectToErrors} from "@/helper/parser/error";
+import {fromObject as fromObjectToCountServices} from "@/helper/countService";
 import {Hotel} from "@/models/Hotel";
 import type {SearchInput} from "@/models/SearchInput";
 import {Flight} from "@/models/Flight";
@@ -14,10 +14,10 @@ import {Weather} from "@/models/Weather";
 class travel {
     static async search(input: SearchInput): Promise<Search> {
         return axios
-            .post(`${import.meta.env.VITE_API_URL}/search`,
-                input.toPayload(),
-                {headers: {Accept: 'application/json'}}
-            ).then((response) => new Search(
+            .post(`${import.meta.env.VITE_API_URL}/search`, input.toPayload(), {
+                headers: {Accept: 'application/json'}}
+            )
+            .then((response) => new Search(
                 response.data.id,
                 response.data.nation,
                 response.data.place,
@@ -38,7 +38,9 @@ class travel {
 
     static async get(id: number): Promise<Search> {
         return axios
-            .get(`${import.meta.env.VITE_API_URL}/search/${id}`, {headers: {Accept: 'application/json'}})
+            .get(`${import.meta.env.VITE_API_URL}/search/${id}`, {
+                headers: {Accept: 'application/json'}}
+            )
             .then((response) => new Search(
                 response.data.id,
                 response.data.nation,
@@ -61,8 +63,8 @@ class travel {
     static async getSearches(): Promise<Search[]> {
         return axios
             .get(`${import.meta.env.VITE_API_URL}/search`, {
-                headers: {Accept: 'application/json'}
-            })
+                headers: {Accept: 'application/json'}}
+            )
             .then((response) => response.data.map((data: any) => new Search(
                 data.id,
                 data.nation,
@@ -127,12 +129,16 @@ class travel {
             })
             .then((response) => response.data.map((data: any) => new Hotel(
                 data.id,
-                data.url,
                 data.title,
+                data.url,
                 data.address,
                 data.descriptions,
                 data.image,
+                data.stars,
                 data.rate,
+                data.food,
+                data.from,
+                data.to,
                 new Money(data.money.price, data.money.currency),
                 data.source,
             )));
@@ -163,7 +169,7 @@ class travel {
     static async getWeathers(searchId: number, source: string): Promise<Weather[]> {
         return axios
             .get(`${import.meta.env.VITE_API_URL}/weather`, {
-                params: {search: searchId, source: source},
+                params: {search: searchId, source: source, limit: 10},
                 headers: {Accept: 'application/json'}
             })
             .then((response) => response.data.map((data: any) => new Weather(
@@ -176,7 +182,6 @@ class travel {
                 data.source,
             )));
     }
-
 }
 
 export default travel

@@ -1,5 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import SearcherView from "@/views/SearcherView.vue";
+import SearcherPageView from "@/views/SearcherPageView.vue";
 import SearcherHistoryView from "@/views/SearcherHistoryView.vue";
 
 const router = createRouter({
@@ -16,13 +17,13 @@ const router = createRouter({
     }, {
         path: '/searcher/:id',
         name: 'Searcher id',
-        component: SearcherView
+        component: SearcherPageView
     }, {
         path: '/searcher/history',
         name: 'Searcher history',
         component: SearcherHistoryView
     }],
     linkActiveClass: "btn-success text-light",
-})
+});
 
 export default router

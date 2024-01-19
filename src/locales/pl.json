@@ -29,7 +29,7 @@
     "show_hotels": "Pokaż hotele",
     "show_flights": "Pokaż loty",
     "show_travel_pages": "Pokaż podróżnicze strony",
-    "show_trips": "Pokaż wycieczki",
+    "show_optional_trips": "Pokaż wycieczki",
     "from_airport": "Z lotniska",
     "to_airport": "Do lotniska",
     "try_using_polish_sentence": "Staraj się używać polskich nazw",
@@ -38,7 +38,6 @@
     "flights": "Loty",
     "travel_pages": "Podróżnicze strony",
     "airport": "Lotnisko",
-    "trips": "Wycieczki",
     "start": "Start",
     "end": "Koniec",
     "stops": "Przesiadki",
@@ -46,6 +45,18 @@
     "show_weathers": "Pokaż pogodę",
     "weather": "Pogoda",
     "temperature": "Temperatura",
-    "precipitation": "Opady"
+    "precipitation": "Opady",
+    "optional_tours": "Wycieczki fakultetywne",
+    "food": "Jedzenie",
+    "hotel": "Hotel",
+    "stars": "Gwiazdki",
+    "stays_from": "Pobyt od",
+    "stays_to": "Pobyt do",
+    "all-inclusive": "All inclusive",
+    "breakfast_launch_and_dinner": "Śniadanie obiad i kolacja",
+    "breakfast_and_dinner": "Śniadanie i kolacja",
+    "breakfast": "Śniadanie",
+    "without_food": "Bez wyżywienia",
+    "offer_trips": "Oferty wycieczek"
   }
 }

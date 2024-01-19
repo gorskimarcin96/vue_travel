@@ -2,13 +2,18 @@ export class SearchInput {
     constructor(
         private nation: string,
         private place: string,
-        private from: string | null,
-        private to: string | null,
-        private fromAirport: string,
-        private toAirport: string,
-        private adults: number,
-        private children: number,
-        private force: boolean
+        private from: string,
+        private to: string,
+        private fromAirport: null | string,
+        private toAirport: null | string,
+        private adults: null | number = null,
+        private children: null | number = null,
+        private hotelFoods: string[] = [],
+        private hotelStars: null | number = null,
+        private hotelRate: null | number = null,
+        private rangeFrom: null | number = null,
+        private rangeTo: null | number = null,
+        private force: boolean = false
     ) {
     }
 
@@ -22,6 +27,11 @@ export class SearchInput {
             toAirport: this.toAirport ? this.toAirport.slice(0, 3) : null,
             adults: this.adults,
             children: this.children,
+            hotelFoods: this.hotelFoods,
+            hotelStars: this.hotelStars,
+            hotelRate: this.hotelRate,
+            rangeFrom: this.rangeFrom,
+            rangeTo: this.rangeTo,
             force: this.force,
         };
     }

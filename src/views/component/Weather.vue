@@ -1,9 +1,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
 import type {PropType} from 'vue';
-import {
-  fromStringToDayAndMonthString,
-} from "@/parser/datetime";
+import {fromStringToDayAndMonthString,} from "@/helper/parser/datetime";
 import type {Weather} from "@/models/Weather";
 
 export default defineComponent({
@@ -23,8 +21,8 @@ export default defineComponent({
     parseDayAndMonth: function (input: string) {
       return fromStringToDayAndMonthString(input);
     },
-    range: function (start: number, end: number): number {
-      return new Array(end - start).fill().map((d, i) => i + start);
+    range: function (start: number, end: number): number[] {
+      return new Array(end - start).fill(0).map((d, i) => i + start);
     }
   },
   created() {

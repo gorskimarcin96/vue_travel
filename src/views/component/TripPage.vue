@@ -2,12 +2,10 @@
 import {defineComponent} from 'vue';
 import type {PropType} from 'vue';
 import {PageTrip as ModelPageTrip } from "@/models/PageTrip";
-import {OptionalTrip as ModelOptionalTrip} from "@/models/OptionalTrip";
 
 export default defineComponent({
   props: {
     pageTrip: {
-
       type: Object as PropType<ModelPageTrip>,
       required: true
     }
@@ -33,13 +31,14 @@ export default defineComponent({
               </li>
             </ul>
           </div>
-          <img class="col-4 m-0 p-0" v-bind:src="image" v-for="image in tripArticle.images"/>
+          <img class="col-4 m-0 p-0" v-bind:src="image" v-for="image in tripArticle.images"
+               v-bind:alt="tripArticle.title"/>
         </div>
       </div>
 
       <div class="row" v-else>
         <div class="col-4">
-          <img class="w-100" v-bind:src="tripArticle.images[0]">
+          <img class="w-100" v-bind:src="tripArticle.images[0]" v-bind:alt="tripArticle.title">
         </div>
         <div class="col-8">
           <h5 class="card-title">{{ tripArticle.title }}</h5>

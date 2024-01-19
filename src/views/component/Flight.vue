@@ -3,9 +3,7 @@ import {defineComponent} from 'vue';
 import type {PropType} from 'vue';
 import Money from "@/views/component/Money.vue";
 import {Flight as FlightModel} from "@/models/Flight";
-import {Money as MoneyModel} from "@/models/Money";
-import {fromStringToDateString, fromStringToDateTimeString} from "@/parser/datetime";
-import {fromString} from "@/parser/namespace";
+import {fromStringToDateTimeString} from "@/helper/parser/datetime";
 
 export default defineComponent({
   computed: {
@@ -25,8 +23,7 @@ export default defineComponent({
       return fromStringToDateTimeString(input);
     },
   }
-})
-;
+});
 </script>
 
 <template>
@@ -59,9 +56,7 @@ export default defineComponent({
       <td>{{ parseDateTime(flight.toStart) }}</td>
       <td>{{ parseDateTime(flight.toEnd) }}</td>
       <td>{{ flight.toStops }}</td>
-      <td>
-        <money :money="flight.money"/>
-      </td>
+      <td><money :money="flight.money"/></td>
     </tr>
     </tbody>
   </table>

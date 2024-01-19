@@ -3,8 +3,8 @@ import {defineComponent} from 'vue';
 import travel from "@/api/travel";
 import type {Search} from "@/models/Search";
 import {RouterLink} from "vue-router";
-import {fromStringToDateString, fromStringToDateTimeString} from "@/parser/datetime";
-import {fromString} from "@/parser/namespace";
+import {fromStringToDateString, fromStringToDateTimeString} from "@/helper/parser/datetime";
+import {parseNamespace} from "@/helper/parser/namespace";
 
 export default defineComponent({
   components: {RouterLink},
@@ -15,15 +15,9 @@ export default defineComponent({
     }
   },
   methods: {
-    parseDate: function (input: string) {
-      return fromStringToDateString(input);
-    },
-    parseDateTime: function (input: string) {
-      return fromStringToDateTimeString(input);
-    },
-    parseNamespace: function (input: string): string {
-      return fromString(input);
-    },
+    fromStringToDateString,
+    fromStringToDateTimeString,
+    parseNamespace
   },
   async created() {
     this.searches = await travel.getSearches();
@@ -35,6 +29,14 @@ export default defineComponent({
 <style>
 .max-width-200px {
   max-width: 200px;
+}
+
+.w-100px {
+  width: 100px
+}
+
+.w-170px {
+  width: 170px
 }
 </style>
 
@@ -67,8 +69,8 @@ export default defineComponent({
       <tr v-for="search in searches">
         <td>{{ search.nation }}</td>
         <td>{{ search.place }}</td>
-        <td>{{ parseDate(search.from) }}</td>
-        <td>{{ parseDate(search.to) }}</td>
+        <td>{{ fromStringToDateString(search.from) }}</td>
+        <td>{{ fromStringToDateString(search.to) }}</td>
         <td>{{ search.adults }}</td>
         <td>{{ search.children }}</td>
         <td>
@@ -88,22 +90,12 @@ export default defineComponent({
               {{ parseNamespace(counter.service) }} {{ counter.count }}
             </span>
         </td>
-        <td>{{ parseDateTime(search.createdAt) }}</td>
+        <td>{{ fromStringToDateTimeString(search.createdAt) }}</td>
         <td>
-          <RouterLink :to="'/searcher/' + search.id">{{ $t('main.show') }}</RouterLink>
+          <RouterLink :key="'search'+search.id" :to="'/searcher/' + search.id">{{ $t('main.show') }}</RouterLink>
         </td>
       </tr>
       </tbody>
     </table>
   </div>
 </template>
-
-<style>
-.w-100px {
-  width: 100px
-}
-
-.w-170px {
-  width: 170px
-}
-</style>
