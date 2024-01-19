@@ -30,6 +30,7 @@ export default defineComponent({
       hotels: [] as ModelHotel[],
       flights: [] as ModelFlight[],
       weathers: [] as ModelWeather[],
+      trips: [] as ModelHotel[],
       timer: new Date(),
     }
   },
@@ -40,7 +41,10 @@ export default defineComponent({
       this.searchData = modelSearch;
 
       for (const service of modelSearch.services) {
-        if (service.includes('PageAttraction')) {
+        if (service.includes('\\Trip')) {
+          (await travel.getTrips(modelSearch.id, service))
+              .map((trip: ModelHotel) => this.trips.filter(item => item.id === trip.id).length ? {} : this.trips.push(trip));
+        } else if (service.includes('PageAttraction')) {
           (await travel.getPageTrips(modelSearch.id, service))
               .map((pageTrip: ModelPageTrip) => this.pageTrips.filter(item => item.id === pageTrip.id).length ? {} : this.pageTrips.push(pageTrip));
         } else if (service.includes('OptionalTrip')) {

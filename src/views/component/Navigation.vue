@@ -41,6 +41,10 @@ export default defineComponent({
       type: Array as PropType<ModelFlight[]>,
       required: true
     },
+    trips: {
+      type: Array as PropType<ModelHotel[]>,
+      required: true
+    },
     pageTrips: {
       type: Array as PropType<ModelPageTrip[]>,
       required: true
@@ -55,6 +59,7 @@ export default defineComponent({
           this.pageTrips.filter((pageTrip) => pageTrip.source === namespace).length === 0 &&
           this.hotels.filter((hotel) => hotel.source === namespace).length === 0 &&
           this.flights.filter((flight) => flight.source === namespace).length === 0 &&
+          this.trips.filter((trip) => trip.source === namespace).length === 0 &&
           this.weathers.filter((weather) => weather.source === namespace).length === 0
       );
     },
@@ -64,6 +69,7 @@ export default defineComponent({
           .concat(this.hotels)
           .concat(this.flights)
           .concat(this.weathers)
+          .concat(this.trips)
           .filter((service) => service.source === namespace).length ?? 0
     },
   }
@@ -74,6 +80,18 @@ export default defineComponent({
   <nav class="bg-success sticky-top py-2">
     <div class="container">
       <div class="d-flex flex-row text-light">
+        <div class="border-end border-dark me-2"/>
+        <div v-if="shower.trips">
+          <p class="pe-2">{{ $t('main.offer_trips') }}</p>
+          <a v-bind:href="existsService(namespace) ? `#${getAnchorLink(namespace)}` : '#'"
+             v-for="namespace in searchData.services.filter((service) => service.includes('\\Trip'))">
+            <button type="button" v-if="existsService(namespace)" class="btn btn-dark mt-2 me-2">
+              {{ parseNamespace(namespace) }} ({{ countServices(namespace) }})
+            </button>
+          </a>
+        </div>
+        <div class="border-end border-dark me-2" v-if="shower.trips"/>
+
         <div v-if="shower.hotels">
           <p class="pe-2">{{ $t('main.hotels') }}</p>
           <a v-bind:href="existsService(namespace) ? `#${getAnchorLink(namespace)}` : '#'"

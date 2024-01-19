@@ -43,6 +43,10 @@ export default defineComponent({
       type: Array as PropType<ModelFlight[]>,
       required: true
     },
+    trips: {
+      type: Array as PropType<ModelHotel[]>,
+      required: true
+    },
     pageTrips: {
       type: Array as PropType<ModelPageTrip[]>,
       required: true
@@ -61,6 +65,15 @@ export default defineComponent({
 
 <template>
   <div class="container">
+    <div v-for="service in uniqueSource(trips)" v-if="shower.trips">
+      <h2 class="text-success" v-bind:id="getAnchorLink(service)">{{ parseNamespace(service) }}</h2>
+      <div class="row">
+        <div class="col-6" v-for="trip in trips.filter((trip) => trip.source === service)">
+          <hotel :hotel="trip" :nightNumber="getNightNumber()"/>
+        </div>
+      </div>
+    </div>
+
     <div v-for="service in uniqueSource(hotels)" v-if="shower.hotels">
       <h2 class="text-success" v-bind:id="getAnchorLink(service)">{{ parseNamespace(service) }}</h2>
       <div class="row">

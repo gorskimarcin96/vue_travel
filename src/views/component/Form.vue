@@ -156,6 +156,13 @@ ol.autocomplete {
       <div class="col-12">{{ $t('main.filters') }}</div>
       <div class="col-sm-4 col-md-2 mt-2">
         <div>
+          <label class="form-check-label" for="show_offers">{{ $t('main.show_offers') }}</label>
+        </div>
+        <input type="checkbox" class="form-check-input" id="show_offers" v-model="shower.trips"
+               @change.prevent="changeShowerStatus">
+      </div>
+      <div class="col-sm-4 col-md-2 mt-2">
+        <div>
           <label class="form-check-label" for="show_hotels">{{ $t('main.show_hotels') }}</label>
         </div>
         <input type="checkbox" class="form-check-input" id="show_hotels" v-model="shower.hotels"
@@ -210,11 +217,11 @@ ol.autocomplete {
         <label for="to" class="form-label">{{ $t('main.to') }}</label>
         <input type="date" class="form-control" id="to" v-model="to">
       </div>
-      <div class="col-sm-12 col-md-3 mt-2" v-if="(shower.hotels || shower.flights) && !hideForm">
+      <div class="col-sm-12 col-md-3 mt-2" v-if="(shower.trips || shower.hotels || shower.flights) && !hideForm">
         <label for="stays_from" class="form-label">{{ $t('main.stays_from') }}</label>
         <input type="number" class="form-control" id="stays_from" v-model="staysFrom">
       </div>
-      <div class="col-sm-12 col-md-3 mt-2" v-if="(shower.hotels || shower.flights) && !hideForm">
+      <div class="col-sm-12 col-md-3 mt-2" v-if="(shower.trips || shower.hotels || shower.flights) && !hideForm">
         <label for="stays_to" class="form-label">{{ $t('main.stays_to') }}</label>
         <input type="number" class="form-control" id="stays_to" v-model="staysTo">
       </div>
@@ -242,23 +249,23 @@ ol.autocomplete {
           </li>
         </ol>
       </div>
-      <div class="col-sm-12 col-md-3 mt-2" v-if="(shower.hotels || shower.flights) && !hideForm">
+      <div class="col-sm-12 col-md-3 mt-2" v-if="(shower.trips || shower.hotels || shower.flights) && !hideForm">
         <label for="adults" class="form-label">{{ $t('main.adults') }}</label>
         <input type="number" class="form-control" id="adults" min="1" step="1" pattern="\d+" v-model="adults">
       </div>
-      <div class="col-sm-12 col-md-3 mt-2" v-if="(shower.hotels || shower.flights) && !hideForm">
+      <div class="col-sm-12 col-md-3 mt-2" v-if="(shower.trips || shower.hotels || shower.flights) && !hideForm">
         <label for="children" class="form-label">{{ $t('main.children') }}</label>
         <input type="number" class="form-control" id="children" min="0" step="1" pattern="\d+" v-model="children">
       </div>
-      <div class="col-sm-12 col-md-3 mt-2" v-if="shower.hotels && !hideForm">
+      <div class="col-sm-12 col-md-3 mt-2" v-if="(shower.trips || shower.hotels) && !hideForm">
         <label for="stars" class="form-label">{{ $t('main.stars') }}</label>
         <input type="number" class="form-control" id="stars" v-model="stars" min="0" max="5" step="1">
       </div>
-      <div class="col-sm-12 col-md-3 mt-2" v-if="shower.hotels && !hideForm">
+      <div class="col-sm-12 col-md-3 mt-2" v-if="(shower.trips || shower.hotels) && !hideForm">
         <label for="rate" class="form-label">{{ $t('main.rate') }}</label>
         <input type="number" class="form-control" id="rate" v-model="rate" min="0" max="10" step="0.1">
       </div>
-      <div class="col-sm-12 col-md-3 mt-2" v-if="shower.hotels && !hideForm">
+      <div class="col-sm-12 col-md-3 mt-2" v-if="(shower.trips || shower.hotels) && !hideForm">
         <label for="food" class="form-label">{{ $t('main.food') }}</label>
         <select class="form-control" id="food" v-model="food" multiple>
           <option v-bind:value="option" v-for="option in foodOptions">

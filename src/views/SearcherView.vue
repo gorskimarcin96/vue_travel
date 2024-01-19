@@ -20,12 +20,14 @@ export default defineComponent({
       :optionalTrips="optionalTrips"
       :hotels="hotels"
       :flights="flights"
-      :weathers="weathers"/>
+      :weathers="weathers"
+      :trips="trips"/>
   <SearcherList
       v-if="searchData"
       :search-data="searchData"
       :shower="shower"
       :page-trips="pageTrips"
+      :trips="trips"
       :flights="flights"
       :optional-trips="optionalTrips"
       :hotels="hotels"

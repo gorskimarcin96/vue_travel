@@ -2,6 +2,7 @@ export class Shower {
     constructor(
        public _hotels: boolean = false,
        public _flights: boolean = false,
+       public _trips: boolean = true,
        public _travelPages: boolean = true,
        public _weathers: boolean = true,
        public _optionalTrips: boolean = true,
@@ -22,6 +23,14 @@ export class Shower {
 
     set flights(value: boolean) {
         this._flights = value;
+    }
+
+    get trips(): boolean {
+        return this._trips;
+    }
+
+    set trips(value: boolean) {
+        this._trips = value;
     }
 
     get travelPages(): boolean {

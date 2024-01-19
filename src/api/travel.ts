@@ -182,6 +182,29 @@ class travel {
                 data.source,
             )));
     }
+
+    static async getTrips(searchId: number, source: string): Promise<Hotel[]> {
+        return axios
+            .get(`${import.meta.env.VITE_API_URL}/trips`, {
+                params: {search: searchId, source: source},
+                headers: {Accept: 'application/json'}
+            })
+            .then((response) => response.data.map((data: any) => new Hotel(
+                data.id,
+                data.title,
+                data.url,
+                null,
+                [],
+                data.image,
+                data.stars,
+                data.rate,
+                data.food,
+                data.from,
+                data.to,
+                new Money(data.money.price, data.money.currency),
+                data.source,
+            )));
+    }
 }
 
 export default travel
