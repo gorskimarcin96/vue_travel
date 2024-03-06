@@ -4,9 +4,11 @@ import travel from "@/api/travel";
 import AbstractSearcherView from "@/views/AbstractSearcherView.vue";
 import {Search} from "@/models/Search";
 import SearcherList from "@/views/component/SearcherList.vue";
+import Navigation from "@/views/component/Navigation.vue";
+import Form from "@/views/component/Form.vue";
 
 export default defineComponent({
-  components: {SearcherList, AbstractSearcherView},
+  components: {Form, Navigation, SearcherList, AbstractSearcherView},
   extends: AbstractSearcherView,
   created() {
     if (this.$route.params.id !== undefined && typeof this.$route.params.id === 'string') {
@@ -17,7 +19,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <Form @request="sendForm" @shower="changeShowStatus" :hideForm="true"/>
+  <Form @shower="changeShowStatus" :hideForm="true"/>
   <Navigation
       v-if="searchData"
       :search-data="searchData"

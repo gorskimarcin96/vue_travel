@@ -15,11 +15,11 @@ import Form from "@/views/component/Form.vue";
 import Navigation from "@/views/component/Navigation.vue";
 import {parseNamespace} from "@/helper/parser/namespace";
 import travel from "@/api/travel";
-import {SearchInput} from "@/models/SearchInput";
 import {Shower} from "@/models/Shower";
+import SearcherList from "@/views/component/SearcherList.vue";
 
 export default defineComponent({
-  components: {Navigation, Form, Weather, Flight, TripPage, OptionalTrip, Hotel},
+  components: {SearcherList, Navigation, Form, Weather, Flight, TripPage, OptionalTrip, Hotel},
   abstract: true,
   data: function () {
     return {
@@ -63,11 +63,8 @@ export default defineComponent({
       }
 
       if (!modelSearch.finished) {
-        setTimeout(() => this.search(modelSearch), 10000);
+        setTimeout(async () => this.search(await travel.get(modelSearch.id)), 1000);
       }
-    },
-    sendForm: function (searchInput: SearchInput) {
-      travel.search(searchInput).then(searchModel => this.search(searchModel))
     },
     changeShowStatus: function (shower: Shower) {
       this.shower = shower;
@@ -78,4 +75,3 @@ export default defineComponent({
   }
 });
 </script>
-<template/>

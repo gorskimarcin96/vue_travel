@@ -51,6 +51,7 @@ export default defineComponent({
           this.staysTo,
           this.force
       ));
+      this.force = false
     },
     changeShowerStatus: function () {
       this.$emit('shower', this.shower);
