@@ -56,8 +56,8 @@ export default defineComponent({
     getAnchorLink,
     uniqueSource,
     parseNamespace,
-    getNightNumber: function (): number {
-      return this.searchData ? this.searchData.adults + this.searchData.children : 0;
+    getNightNumber(): number {
+      return Math.floor((new Date(this.searchData.to) - new Date(this.searchData.from)) / (24 * 3600 * 1000)) - 1;
     }
   }
 });
