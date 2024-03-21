@@ -5,6 +5,7 @@ import Money from "@/views/component/Money.vue";
 import {Hotel as HotelModel} from "@/models/Hotel";
 import {Money as MoneyModel} from "@/models/Money";
 import {foodStringToTranslate} from "@/helper/foodTranslate";
+import {fromStringToDateString} from "@/helper/parser/datetime";
 
 export default defineComponent({
   computed: {
@@ -24,6 +25,7 @@ export default defineComponent({
     }
   },
   methods: {
+    fromStringToDateString,
     foodStringToTranslate,
     getMainPrice() {
       return new MoneyModel(Math.round(this.hotel.money.price * this.nightNumber * 100) / 100, this.hotel.money.currency);
@@ -53,6 +55,12 @@ export default defineComponent({
         <div class="my-1">
           {{ $t('main.price_for_night') }}:
           <money v-bind:money="hotel.money" v-bind:cssClass="'text-success fw-bolder'"/>
+        </div>
+        <div class="my-1">
+          {{ $t('main.interval') }}:
+          <span class="text-success fw-bolder">{{ fromStringToDateString(hotel.from) }}</span>
+          {{ ' - ' }}
+          <span class="text-success fw-bolder">{{ fromStringToDateString(hotel.to) }}</span>
         </div>
         <div class="my-1" v-if="hotel.stars">
           {{ $t('main.hotel') }}:
