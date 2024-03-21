@@ -19,17 +19,16 @@ export default defineComponent({
       type: Object as PropType<HotelModel>,
       required: true
     },
-    nightNumber: {
-      type: Number,
-      required: true
-    }
   },
   methods: {
     fromStringToDateString,
     foodStringToTranslate,
     getMainPrice() {
-      return new MoneyModel(Math.round(this.hotel.money.price * this.nightNumber * 100) / 100, this.hotel.money.currency);
+      return new MoneyModel(Math.round(this.hotel.money.price * this.getNightNumber() * 100) / 100, this.hotel.money.currency);
     },
+    getNightNumber(): number {
+      return Math.floor((new Date(this.hotel.to) - new Date(this.hotel.from)) / (24 * 3600 * 1000)) - 1;
+    }
   }
 });
 </script>
@@ -61,6 +60,7 @@ export default defineComponent({
           <span class="text-success fw-bolder">{{ fromStringToDateString(hotel.from) }}</span>
           {{ ' - ' }}
           <span class="text-success fw-bolder">{{ fromStringToDateString(hotel.to) }}</span>
+          ({{ getNightNumber()}} {{ $t('main.nights')}})
         </div>
         <div class="my-1" v-if="hotel.stars">
           {{ $t('main.hotel') }}:

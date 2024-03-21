@@ -56,9 +56,6 @@ export default defineComponent({
     getAnchorLink,
     uniqueSource,
     parseNamespace,
-    getNightNumber(): number {
-      return Math.floor((new Date(this.searchData.to) - new Date(this.searchData.from)) / (24 * 3600 * 1000)) - 1;
-    }
   }
 });
 </script>
@@ -69,7 +66,7 @@ export default defineComponent({
       <h2 class="text-success" v-bind:id="getAnchorLink(service)">{{ parseNamespace(service) }}</h2>
       <div class="row">
         <div class="col-6" v-for="trip in trips.filter((trip) => trip.source === service)">
-          <hotel :hotel="trip" :nightNumber="getNightNumber()"/>
+          <hotel :hotel="trip"/>
         </div>
       </div>
     </div>
@@ -78,7 +75,7 @@ export default defineComponent({
       <h2 class="text-success" v-bind:id="getAnchorLink(service)">{{ parseNamespace(service) }}</h2>
       <div class="row">
         <div class="col-6" v-for="hotel in hotels.filter((hotel) => hotel.source === service)">
-          <hotel :hotel="hotel" :nightNumber="getNightNumber()"/>
+          <hotel :hotel="hotel"/>
         </div>
       </div>
     </div>

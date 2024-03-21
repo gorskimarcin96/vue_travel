@@ -11,7 +11,6 @@ import OptionalTrip from "@/views/component/OptionalTrip.vue";
 import Hotel from "@/views/component/Hotel.vue";
 import Flight from "@/views/component/Flight.vue";
 import Weather from "@/views/component/Weather.vue";
-import Form from "@/views/component/Form.vue";
 import Navigation from "@/views/component/Navigation.vue";
 import {parseNamespace} from "@/helper/parser/namespace";
 import travel from "@/api/travel";
@@ -19,7 +18,7 @@ import {Shower} from "@/models/Shower";
 import SearcherList from "@/views/component/SearcherList.vue";
 
 export default defineComponent({
-  components: {SearcherList, Navigation, Form, Weather, Flight, TripPage, OptionalTrip, Hotel},
+  components: {SearcherList, Navigation, Weather, Flight, TripPage, OptionalTrip, Hotel},
   abstract: true,
   data: function () {
     return {
@@ -68,9 +67,6 @@ export default defineComponent({
     },
     changeShowStatus: function (shower: Shower) {
       this.shower = shower;
-    },
-    getNightNumber: function (): number {
-      return this.searchData ? this.searchData.adults + this.searchData.children : 0;
     }
   }
 });
