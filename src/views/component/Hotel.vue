@@ -6,6 +6,7 @@ import {Hotel as HotelModel} from "@/models/Hotel";
 import {Money as MoneyModel} from "@/models/Money";
 import {foodStringToTranslate} from "@/helper/foodTranslate";
 import {fromStringToDateString} from "@/helper/parser/datetime";
+import type {MoneyInterface} from "@/models/MoneyInterface";
 
 export default defineComponent({
   computed: {
@@ -19,15 +20,19 @@ export default defineComponent({
       type: Object as PropType<HotelModel>,
       required: true
     },
+    persons: {
+      type: Number,
+      required: true
+    }
   },
   methods: {
     fromStringToDateString,
     foodStringToTranslate,
-    getMainPrice() {
-      return new MoneyModel(Math.round(this.hotel.money.price * this.getNightNumber() * 100) / 100, this.hotel.money.currency);
+    getMoneyForNight(money: MoneyInterface): MoneyInterface {
+      return new MoneyModel(Math.round(money.price / this.getNightNumber() * 100) / 100, money.priceForOnePerson, money.currency);
     },
     getNightNumber(): number {
-      return Math.floor((new Date(this.hotel.to) - new Date(this.hotel.from)) / (24 * 3600 * 1000)) - 1;
+      return Math.floor((+new Date(this.hotel.to) - +new Date(this.hotel.from)) / (24 * 3600 * 1000)) - 1;
     }
   }
 });
@@ -49,18 +54,28 @@ export default defineComponent({
       <div class="col-8">
         <div class="my-1">
           {{ $t('main.price') }}:
-          <money v-bind:money="getMainPrice()" v-bind:cssClass="'text-success fw-bolder'"/>
+          <span class="text-success fw-bolder">
+            <money v-bind:money="hotel" v-bind:persons="persons"/>
+          </span>
+          {{ ' - ' }}
+          <money v-bind:money="hotel" v-bind:persons="persons" v-bind:showForOne="true"/>
+          {{ $t('main.one_person') }}
         </div>
         <div class="my-1">
           {{ $t('main.price_for_night') }}:
-          <money v-bind:money="hotel.money" v-bind:cssClass="'text-success fw-bolder'"/>
+          <span class="text-success fw-bolder">
+            <money v-bind:money="getMoneyForNight(hotel)" v-bind:persons="persons"/>
+          </span>
+          {{ ' - ' }}
+          <money v-bind:money="getMoneyForNight(hotel)" v-bind:persons="persons" v-bind:showForOne="true"/>
+          {{ $t('main.one_person') }}
         </div>
         <div class="my-1">
           {{ $t('main.interval') }}:
           <span class="text-success fw-bolder">{{ fromStringToDateString(hotel.from) }}</span>
           {{ ' - ' }}
           <span class="text-success fw-bolder">{{ fromStringToDateString(hotel.to) }}</span>
-          ({{ getNightNumber()}} {{ $t('main.nights')}})
+          ({{ getNightNumber() }} {{ $t('main.night_number') }})
         </div>
         <div class="my-1" v-if="hotel.stars">
           {{ $t('main.hotel') }}:

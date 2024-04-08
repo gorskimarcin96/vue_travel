@@ -1,7 +1,7 @@
 import type {SourceInterface} from "@/models/SourceInterface";
-import type {Money} from "@/models/Money";
+import type {MoneyInterface} from "@/models/MoneyInterface";
 
-export class Hotel implements SourceInterface {
+export class Hotel implements SourceInterface, MoneyInterface {
     constructor(
         public readonly _id: number,
         public readonly _title: string,
@@ -14,7 +14,9 @@ export class Hotel implements SourceInterface {
         public readonly _food: string,
         public readonly _from: string,
         public readonly _to: string,
-        public readonly _money: Money,
+        public readonly _price: number,
+        public readonly _priceForOnePerson: boolean,
+        public readonly _currency: string,
         public readonly _source: string
     ) {
     }
@@ -63,8 +65,16 @@ export class Hotel implements SourceInterface {
         return this._to;
     }
 
-    get money(): Money {
-        return this._money;
+    get price(): number {
+        return this._price;
+    }
+
+    get priceForOnePerson(): boolean {
+        return this._priceForOnePerson;
+    }
+
+    get currency(): string {
+        return this._currency;
     }
 
     get source(): string {

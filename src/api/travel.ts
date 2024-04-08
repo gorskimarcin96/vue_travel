@@ -3,7 +3,6 @@ import {Search} from "@/models/Search";
 import {OptionalTrip} from "@/models/OptionalTrip";
 import {PageTrip} from "@/models/PageTrip";
 import {TripArticle} from "@/models/PageArticle";
-import {Money} from "@/models/Money";
 import {fromObject as fromObjectToErrors} from "@/helper/parser/error";
 import {fromObject as fromObjectToCountServices} from "@/helper/countService";
 import {Hotel} from "@/models/Hotel";
@@ -14,9 +13,7 @@ import {Weather} from "@/models/Weather";
 class travel {
     static async search(input: SearchInput): Promise<Search> {
         return axios
-            .post(`${import.meta.env.VITE_API_URL}/search`, input.toPayload(), {
-                headers: {Accept: 'application/json'}}
-            )
+            .post(`${import.meta.env.VITE_API_URL}/search`, input.toPayload(), {headers: {Accept: 'application/json'}})
             .then((response) => new Search(
                 response.data.id,
                 response.data.nation,
@@ -38,9 +35,7 @@ class travel {
 
     static async get(id: number): Promise<Search> {
         return axios
-            .get(`${import.meta.env.VITE_API_URL}/search/${id}`, {
-                headers: {Accept: 'application/json'}}
-            )
+            .get(`${import.meta.env.VITE_API_URL}/search/${id}`, {headers: {Accept: 'application/json'}})
             .then((response) => new Search(
                 response.data.id,
                 response.data.nation,
@@ -62,9 +57,7 @@ class travel {
 
     static async getSearches(): Promise<Search[]> {
         return axios
-            .get(`${import.meta.env.VITE_API_URL}/search`, {
-                headers: {Accept: 'application/json'}}
-            )
+            .get(`${import.meta.env.VITE_API_URL}/search`, {headers: {Accept: 'application/json'}})
             .then((response) => response.data.map((data: any) => new Search(
                 data.id,
                 data.nation,
@@ -97,7 +90,9 @@ class travel {
                 data.url,
                 data.image,
                 data.source,
-                data.money ? new Money(data.money.price, data.money.currency) : null,
+                data.price,
+                data.priceForOnePerson,
+                data.currency
             )));
     }
 
@@ -139,7 +134,9 @@ class travel {
                 data.food,
                 data.from,
                 data.to,
-                new Money(data.money.price, data.money.currency),
+                data.price,
+                data.priceForOnePerson,
+                data.currency,
                 data.source,
             )));
     }
@@ -161,7 +158,9 @@ class travel {
                 data.toEnd,
                 data.toStops,
                 data.url,
-                new Money(data.money.price, data.money.currency),
+                data.price,
+                data.priceForOnePerson,
+                data.currency,
                 data.source,
             )));
     }
@@ -201,7 +200,9 @@ class travel {
                 data.food,
                 data.from,
                 data.to,
-                new Money(data.money.price, data.money.currency),
+                data.price,
+                data.priceForOnePerson,
+                data.currency,
                 data.source,
             )));
     }

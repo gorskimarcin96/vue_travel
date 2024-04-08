@@ -60,6 +60,8 @@
     "without_food": "Bez wyżywienia",
     "offer_trips": "Oferty wycieczek",
     "interval": "Okres",
-    "nights": "noce"
+    "night_number": "ilość nocy",
+    "full_price": "Pełna cena",
+    "one_person": " / 1 os."
   }
 }

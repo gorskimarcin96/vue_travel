@@ -66,7 +66,7 @@ export default defineComponent({
       <h2 class="text-success" v-bind:id="getAnchorLink(service)">{{ parseNamespace(service) }}</h2>
       <div class="row">
         <div class="col-6" v-for="trip in trips.filter((trip) => trip.source === service)">
-          <hotel :hotel="trip"/>
+          <hotel :hotel="trip" :persons="searchData?.adults ?? 0 + searchData?.children ?? 0"/>
         </div>
       </div>
     </div>
@@ -75,20 +75,21 @@ export default defineComponent({
       <h2 class="text-success" v-bind:id="getAnchorLink(service)">{{ parseNamespace(service) }}</h2>
       <div class="row">
         <div class="col-6" v-for="hotel in hotels.filter((hotel) => hotel.source === service)">
-          <hotel :hotel="hotel"/>
+          <hotel :hotel="hotel" :persons="searchData?.adults ?? 0 + searchData?.children ?? 0"/>
         </div>
       </div>
     </div>
 
     <div v-for="service in uniqueSource(flights)" v-if="shower.flights">
       <h2 class="text-success" v-bind:id="getAnchorLink(service)">{{ parseNamespace(service) }}</h2>
-      <flight :flights="flights.filter((flight) => flight.source === service)"/>
+      <flight :flights="flights.filter((flight) => flight.source === service)"
+              :persons="searchData?.adults ?? 0 + searchData?.children ?? 0"/>
     </div>
 
     <div v-for="service in uniqueSource(optionalTrips)" v-if="shower.optionalTrips">
       <h2 class="text-success" v-bind:id="getAnchorLink(service)">{{ parseNamespace(service) }}</h2>
       <div v-for="optionalTrip in optionalTrips.filter((optionalTrip) => optionalTrip.source === service)">
-        <optional-trip :optional-trip="optionalTrip"/>
+        <optional-trip :optional-trip="optionalTrip" :persons="searchData?.adults ?? 0 + searchData?.children ?? 0"/>
       </div>
     </div>
 

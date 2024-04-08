@@ -16,6 +16,10 @@ export default defineComponent({
     flights: {
       type: Array as PropType<FlightModel[]>,
       required: true
+    },
+    persons: {
+      type: Number,
+      required: true
     }
   },
   methods: {
@@ -32,7 +36,7 @@ export default defineComponent({
     <tr>
       <th colspan="4">{{ $t('main.from') }}</th>
       <th colspan="4">{{ $t('main.to') }}</th>
-      <th>{{ $t('main.price') }}</th>
+      <th colspan="2">{{ $t('main.price') }}</th>
     </tr>
     <tr>
       <th>{{ $t('main.airport') }}</th>
@@ -43,7 +47,8 @@ export default defineComponent({
       <th>{{ $t('main.start') }}</th>
       <th>{{ $t('main.end') }}</th>
       <th>{{ $t('main.stops') }}</th>
-      <th></th>
+      <th>{{ $t('main.full_price') }}</th>
+      <th>{{ $t('main.one_person') }}</th>
     </tr>
     </thead>
     <tbody>
@@ -56,7 +61,16 @@ export default defineComponent({
       <td>{{ parseDateTime(flight.toStart) }}</td>
       <td>{{ parseDateTime(flight.toEnd) }}</td>
       <td>{{ flight.toStops }}</td>
-      <td><money :money="flight.money"/></td>
+      <td>
+        <span class="badge bg-success">
+          <money :money="flight" v-bind:persons="persons"/>
+        </span>
+      </td>
+      <td>
+        <span class="badge bg-black">
+          <money :money="flight" v-bind:persons="persons" v-bind:showForOne="true"/> {{ $t('main.one_person') }}
+        </span>
+      </td>
     </tr>
     </tbody>
   </table>

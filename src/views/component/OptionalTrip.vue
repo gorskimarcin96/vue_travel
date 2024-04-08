@@ -10,6 +10,10 @@ export default defineComponent({
     optionalTrip: {
       type: Object as PropType<ModelOptionalTrip>,
       required: true
+    },
+    persons: {
+      type: Number,
+      required: true
     }
   }
 });
@@ -22,7 +26,14 @@ export default defineComponent({
         <a v-bind:href="optionalTrip.url" target="_blank" class="me-2">
           {{ optionalTrip.title }}
         </a>
-        <money v-if="optionalTrip.money" v-bind:money="optionalTrip.money"/>
+        <span class="badge bg-success">
+          <money v-bind:money="optionalTrip" v-bind:persons="persons"/>
+        </span>
+        {{ ' - ' }}
+        <span class="badge bg-black">
+          <money v-bind:money="optionalTrip" v-bind:persons="persons" v-bind:showForOne="true"/>
+          {{ $t('main.one_person') }}
+        </span>
       </p>
     </div>
     <div class="card-body row">

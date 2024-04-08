@@ -1,7 +1,7 @@
 import type {SourceInterface} from "@/models/SourceInterface";
-import type {Money} from "@/models/Money";
+import type {MoneyInterface} from "@/models/MoneyInterface";
 
-export class Flight implements SourceInterface {
+export class Flight implements SourceInterface, MoneyInterface {
     constructor(
         public readonly _id: string,
         public readonly _fromAirport: string,
@@ -13,7 +13,9 @@ export class Flight implements SourceInterface {
         public readonly _toEnd: string,
         public readonly _toStops: string,
         public readonly _url: string,
-        public readonly _money: Money,
+        public readonly _price: number,
+        public readonly _priceForOnePerson: boolean,
+        public readonly _currency: string,
         public readonly _source: string
     ) {
     }
@@ -58,8 +60,16 @@ export class Flight implements SourceInterface {
         return this._url;
     }
 
-    get money(): Money {
-        return this._money;
+    get price(): number {
+        return this._price;
+    }
+
+    get priceForOnePerson(): boolean {
+        return this._priceForOnePerson;
+    }
+
+    get currency(): string {
+        return this._currency;
     }
 
     get source(): string {
