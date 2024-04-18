@@ -6,6 +6,6 @@
     ``` 
 2. Build fronted app
     ```sh
-    cd docker && cp .env.dist .env && docker-compose up -d
+   rm -rf dist/ && rm -rf node_modules/ && docker-compose -f docker/docker-compose.yml down -v && docker-compose -f docker/docker-compose.yml build --no-cache && docker-compose -f docker/docker-compose.yml up -d
     ```
 3. [Open app from this link.](http://localhost:81/)
