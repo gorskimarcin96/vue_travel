@@ -9,3 +9,7 @@
    rm -rf dist/ && rm -rf node_modules/ && docker-compose -f docker/docker-compose.yml down -v && docker-compose -f docker/docker-compose.yml build --no-cache && docker-compose -f docker/docker-compose.yml up -d
     ```
 3. [Open app from this link.](http://localhost:81/)
+
+> [!NOTE]
+> It is frontend app related to [backend app](https://github.com/gorskimarcin96/sf_travel).
+> After launching the backend application, we can test the frontend application. 
