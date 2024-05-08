@@ -2,17 +2,14 @@ import {Error} from "@/models/Error";
 import type {CountService} from "@/models/CountService";
 import type {SearchEntityInterface} from "@/models/SearchEntityInterface";
 
-export class Search implements SearchEntityInterface {
+export class LastMinute implements SearchEntityInterface {
     constructor(
         public readonly _id: number,
-        public readonly _nation: string,
-        public readonly _place: string,
         public readonly _from: string,
         public readonly _to: string,
         public readonly _adults: number,
         public readonly _children: number,
         public readonly _fromAirport: string,
-        public readonly _toAirport: string,
         public readonly _services: string[],
         public readonly _errors: Error[],
         public readonly _createdAt: string,
@@ -24,14 +21,6 @@ export class Search implements SearchEntityInterface {
 
     get id(): number {
         return this._id;
-    }
-
-    get nation(): string {
-        return this._nation;
-    }
-
-    get place(): string {
-        return this._place;
     }
 
     get from(): string {
@@ -52,10 +41,6 @@ export class Search implements SearchEntityInterface {
 
     get fromAirport(): string {
         return this._fromAirport;
-    }
-
-    get toAirport(): string {
-        return this._toAirport;
     }
 
     get services(): string[] {

@@ -3,18 +3,18 @@ import {defineComponent} from 'vue';
 import type {PropType} from 'vue';
 import type {SourceInterface} from "@/models/SourceInterface";
 import {Shower} from "@/models/Shower";
-import {Search as ModelSearch} from "@/models/Search";
 import {Weather as ModelWeather} from "@/models/Weather";
 import {Hotel as ModelHotel} from "@/models/Hotel";
 import {OptionalTrip as ModelOptionalTrip} from "@/models/OptionalTrip";
 import {Flight as ModelFlight} from "@/models/Flight";
 import {PageTrip as ModelPageTrip} from "@/models/PageTrip";
 import {getAnchorLink, parseNamespace} from "@/helper/parser/namespace";
+import type {SearchEntityInterface} from "@/models/SearchEntityInterface";
 
 export default defineComponent({
   props: {
-    searchData: {
-      type: Object as PropType<ModelSearch>,
+    searchEntity: {
+      type: Object as PropType<SearchEntityInterface>,
       required: true
     },
     shower: {
@@ -84,7 +84,7 @@ export default defineComponent({
         <div v-if="shower.trips">
           <p class="pe-2">{{ $t('main.offer_trips') }}</p>
           <a v-bind:href="existsService(namespace) ? `#${getAnchorLink(namespace)}` : '#'"
-             v-for="namespace in searchData.services.filter((service) => service.includes('\\Trip'))">
+             v-for="namespace in searchEntity.services.filter((service) => service.includes('\\Trip'))">
             <button type="button" v-if="existsService(namespace)" class="btn btn-dark mt-2 me-2">
               {{ parseNamespace(namespace) }} ({{ countServices(namespace) }})
             </button>
@@ -95,7 +95,7 @@ export default defineComponent({
         <div v-if="shower.hotels">
           <p class="pe-2">{{ $t('main.hotels') }}</p>
           <a v-bind:href="existsService(namespace) ? `#${getAnchorLink(namespace)}` : '#'"
-             v-for="namespace in searchData.services.filter((service) => service.includes('Hotel'))">
+             v-for="namespace in searchEntity.services.filter((service) => service.includes('Hotel'))">
             <button type="button" v-if="existsService(namespace)" class="btn btn-dark mt-2 me-2">
               {{ parseNamespace(namespace) }} ({{ countServices(namespace) }})
             </button>
@@ -106,7 +106,7 @@ export default defineComponent({
         <div v-if="shower.flights">
           <p class="pe-2">{{ $t('main.flights') }}</p>
           <a v-bind:href="existsService(namespace) ? `#${getAnchorLink(namespace)}` : '#'"
-             v-for="namespace in searchData.services.filter((service) => service.includes('Flight'))">
+             v-for="namespace in searchEntity.services.filter((service) => service.includes('Flight'))">
             <button type="button" v-if="existsService(namespace)" class="btn btn-dark mt-2 me-2">
               {{ parseNamespace(namespace) }} ({{ countServices(namespace) }})
             </button>
@@ -117,7 +117,7 @@ export default defineComponent({
         <div v-if="shower.optionalTrips">
           <p class="pe-2">{{ $t('main.optional_tours') }}</p>
           <a v-bind:href="existsService(namespace) ? `#${getAnchorLink(namespace)}` : '#'"
-             v-for="namespace in searchData.services.filter((service) => service.includes('OptionalTrip'))">
+             v-for="namespace in searchEntity.services.filter((service) => service.includes('OptionalTrip'))">
             <button type="button" v-if="existsService(namespace)" class="btn btn-dark mt-2 me-2">
               {{ parseNamespace(namespace) }} ({{ countServices(namespace) }})
             </button>
@@ -128,7 +128,7 @@ export default defineComponent({
         <div v-if="shower.weathers">
           <p class="pe-2">{{ $t('main.weather') }}</p>
           <a v-bind:href="existsService(namespace) ? `#${getAnchorLink(namespace)}` : '#'"
-             v-for="namespace in searchData.services.filter((service) => service.includes('Weather'))">
+             v-for="namespace in searchEntity.services.filter((service) => service.includes('Weather'))">
             <button type="button" v-if="existsService(namespace)" class="btn btn-dark mt-2 me-2">
               {{ parseNamespace(namespace) }} ({{ countServices(namespace) }})
             </button>
@@ -139,7 +139,7 @@ export default defineComponent({
         <div v-if="shower.travelPages">
           <p class="pe-2">{{ $t('main.travel_pages') }}</p>
           <a v-bind:href="existsService(namespace) ? `#${getAnchorLink(namespace)}` : '#'"
-             v-for="namespace in searchData.services.filter((service) => service.includes('PageAttraction'))">
+             v-for="namespace in searchEntity.services.filter((service) => service.includes('PageAttraction'))">
             <button type="button" v-if="existsService(namespace)" class="btn btn-dark mt-2 me-2">
               {{ parseNamespace(namespace) }} ({{ countServices(namespace) }})
             </button>
@@ -152,7 +152,7 @@ export default defineComponent({
           <a href="#form">
             <button type="button" class="btn btn-dark mt-2 me-2">{{ $t('main.searcher') }}</button>
           </a>
-          <button class="btn btn-dark mt-2 me-2" disabled type="button" v-if="!searchData.finished">
+          <button class="btn btn-dark mt-2 me-2" disabled type="button" v-if="!searchEntity.finished">
             [{{ timer.toTimeString().split(' ')[0] }}] {{ $t('main.downloading') }}...
           </button>
         </div>

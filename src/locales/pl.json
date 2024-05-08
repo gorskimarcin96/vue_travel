@@ -62,6 +62,9 @@
     "interval": "Okres",
     "night_number": "ilość nocy",
     "full_price": "Pełna cena",
-    "one_person": " / 1 os."
+    "one_person": " / 1 os.",
+    "last_minute": "Last minute",
+    "empty": "brak",
+    "downloaded": "Pobrany"
   }
 }

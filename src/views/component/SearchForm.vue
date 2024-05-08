@@ -134,7 +134,7 @@ export default defineComponent({
   created() {
     this.from = this.parseDate(this.addDays(new Date(), 30).toISOString());
     this.to = this.parseDate(this.addDays(new Date(), 60).toISOString());
-    this.selectFromAirport('WAW');
+    this.selectFromAirport('LUZ');
   },
   props: {
     hideForm: {

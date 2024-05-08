@@ -1,14 +1,14 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
-import AbstractSearcherView from "@/views/AbstractSearcherView.vue";
+import AbstractSearcherView from "@/views/searcher/AbstractSearcherView.vue";
 import SearcherList from "@/views/component/SearcherList.vue";
-import Form from "@/views/component/Form.vue";
+import SearchForm from "@/views/component/SearchForm.vue";
 import Navigation from "@/views/component/Navigation.vue";
 import {SearchInput} from "@/models/SearchInput";
 import travel from "@/api/travel";
 
 export default defineComponent({
-  components: {Form, Navigation, SearcherList, AbstractSearcherView},
+  components: {SearchForm, Navigation, SearcherList},
   extends: AbstractSearcherView,
   methods: {
     sendForm(searchInput: SearchInput) {
@@ -19,10 +19,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <Form @request="sendForm" @shower="changeShowStatus" :hideForm="false"/>
+  <SearchForm @request="sendForm" @shower="changeShowStatus" :hideForm="false"/>
   <Navigation
       v-if="searchData"
-      :search-data="searchData"
+      :search-entity="searchData"
       :shower="shower"
       :timer="timer"
       :pageTrips="pageTrips"
@@ -33,7 +33,7 @@ export default defineComponent({
       :trips="trips"/>
   <SearcherList
       v-if="searchData"
-      :search-data="searchData"
+      :search-entity="searchData"
       :shower="shower"
       :page-trips="pageTrips"
       :trips="trips"

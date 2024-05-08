@@ -16,6 +16,7 @@ import {parseNamespace} from "@/helper/parser/namespace";
 import travel from "@/api/travel";
 import {Shower} from "@/models/Shower";
 import SearcherList from "@/views/component/SearcherList.vue";
+import {TripInput} from "@/models/TripInput";
 
 export default defineComponent({
   components: {SearcherList, Navigation, Weather, Flight, TripPage, OptionalTrip, Hotel},
@@ -41,7 +42,7 @@ export default defineComponent({
 
       for (const service of modelSearch.services) {
         if (service.includes('\\Trip')) {
-          (await travel.getTrips(modelSearch.id, service))
+          (await travel.getTrips(new TripInput(modelSearch.id, null, service)))
               .map((trip: ModelHotel) => this.trips.filter(item => item.id === trip.id).length ? {} : this.trips.push(trip));
         } else if (service.includes('PageAttraction')) {
           (await travel.getPageTrips(modelSearch.id, service))
@@ -62,7 +63,7 @@ export default defineComponent({
       }
 
       if (!modelSearch.finished) {
-        setTimeout(async () => this.search(await travel.get(modelSearch.id)), 1000);
+        setTimeout(async () => this.search(await travel.getSearch(modelSearch.id)), 1000);
       }
     },
     changeShowStatus: function (shower: Shower) {
